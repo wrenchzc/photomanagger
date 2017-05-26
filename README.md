@@ -1,5 +1,5 @@
 # photomanagger
-a comand line photo manaer 
+a comand line photo manager 
 
 我的照片已经多到感觉无法管理了, 终于决定写一个命令行工具来管理我的照片
 
