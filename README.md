@@ -5,10 +5,11 @@ a comand line photo manager
 
 初步设想实现以下功能
 1. 查重, 使用md5查重. 
-2. 命令行批量标签. 
-3. 使用ProductAI自动打标签. 
-4. 使用ProductAI进行人脸识别. 
-5. 人脸聚类. 
+2. 命令行批量标签.
+3. 命令汗批量操作，如重命名，批量改大小等
+4. 使用ProductAI自动打标签.
+5. 使用ProductAI进行人脸识别.
+6. 人脸聚类.
 
 使用sqlite做数据库, 看看sqlite在几百万这个量级的性能如何
 
