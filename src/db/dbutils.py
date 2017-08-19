@@ -15,12 +15,15 @@ class IndexDB:
         self.init()
 
     def execute_multi(self, sqls):
-        [self.execute(sql) for sql in sqls]
+        [self.execute(sql, do_commit=False) for sql in sqls]
+        self.connection.commit()
 
-    def execute(self, sql):
+    def execute(self, sql, params=(), do_commit=True):
         cursor = self.connection.cursor()
         try:
-            cursor.execute(sql)
+            cursor.execute(sql, params)
+            if do_commit:
+                self.connection.commit()
         finally:
             cursor.close()
 
@@ -36,13 +39,12 @@ class IndexDB:
     def init(self):
         sql_init_tables = "CREATE TABLE IF NOT EXISTS tbl_images " \
                           "(" \
-                          "id bigint, " \
+                          "id integer PRIMARY KEY AUTOINCREMENT, " \
                           "uuid varchar(32)," \
                           "filename varchar(128), " \
                           "file_size int," \
                           "md5 varchar(32)," \
                           "file_createtime datetime," \
-                          "file_modifytime dateime," \
                           "image_width int," \
                           "image_height int," \
                           "origin_datetime datetime," \
@@ -62,27 +64,26 @@ class IndexDB:
                           "altitude varchar(32), " \
                           "country varchar(32), " \
                           "province varchar(32), " \
-                          "city varchar(32), " \
-                          "PRIMARY KEY (id)" \
+                          "city varchar(32) " \
                           ");" \
                           "CREATE TABLE IF NOT EXISTS tbl_tags" \
                           "(" \
-                          "id bigint," \
-                          "image_id bigint, " \
-                          "tag varchar(32)," \
-                          "PRIMARY KEY (id)" \
+                          "id integer primary key AUTOINCREMENT," \
+                          "image_id integer, " \
+                          "tag varchar(32)" \
                           ");" \
                           "CREATE TABLE IF NOT EXISTS tbl_options" \
                           "(" \
-                          "id int," \
+                          "id integer primary key AUTOINCREMENT," \
                           "name varchar(32)," \
-                          "value varchar(128)," \
-                          "PRIMARY KEY(id)"\
+                          "value varchar(128)" \
                           ");"
 
         sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_name on tbl_images(filename); " \
                          "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
                          "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_uuid on tbl_images(uuid); " \
+                         "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
+                         "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_filename on tbl_images(filename); " \
                          "CREATE INDEX IF NOT EXISTS inx_images_camara_type on tbl_images(camera_brand);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_country on tbl_images(country);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_province on tbl_images(province);" \
