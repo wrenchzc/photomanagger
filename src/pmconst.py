@@ -1,0 +1,2 @@
+
+PMDBNAME = "pmindex.db"

@@ -6,16 +6,15 @@ def quote_str(s):
 
 
 class ImageDBHandler:
-    def __init__(self, index_db, filenames):
+    def __init__(self, index_db):
         """
         :param index_db: instance of src.dbutils.Indexdb
         :param filenames: list of image filenames
         """
         self.index_db = index_db
-        self.filenames = filenames
 
-    def do_index(self):
-        [self.index_image(filename) for filename in self.filenames]
+    def do_index(self, filenames):
+        [self.index_image(filename) for filename in filenames]
 
     def index_image(self, filename):
         image_info = ImageInfo(filename)

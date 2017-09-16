@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from src.pmconst import PMDBNAME
 
 
 class IndexDB:
@@ -10,7 +11,7 @@ class IndexDB:
         return dir
 
     def __init__(self, rootdir):
-        self._dbname = self.__ensure_slahs(rootdir) + "pmindex.db"
+        self._dbname = self.__ensure_slahs(rootdir) + PMDBNAME
         self.connection = sqlite3.connect(self._dbname)
         self.init()
 

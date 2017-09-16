@@ -22,10 +22,12 @@ def _do_init_db():
     values = inx_db.query(query_sql)
     return values
 
+
 def test_single_image():
     inx_db = IndexDB(".")
-    image_handler = ImageDBHandler(inx_db, ["data/test1.jpg", "data/test4.jpg"])
-    image_handler.do_index()
+    image_handler = ImageDBHandler(inx_db)
+    files = ["data/test1.jpg", "data/test4.jpg"]
+    image_handler.do_index(files)
     query_sql = "SELECT * from tbl_images"
     values = inx_db.query(query_sql)
     assert len(values) == 2
@@ -37,4 +39,3 @@ def test_single_image():
     assert values[1][2] == u'data/test4.jpg'
     assert values[1][6] == 1057
     assert values[1][7] == 1123
-
