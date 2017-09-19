@@ -1,33 +1,46 @@
-import sys
-import argparse
-from indexer import index_image
+import click
 
+@click.group()
+def photo_manager_cli():
+    pass
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="command line for manage photos")
-    sub_parser = parser.add_subparsers(help='photo manager commands')
-    parser.add_argument('folder', type=str, help="image folder")
+@click.command()
+@click.option('--force',  default=False, help="force update index of folder")
+@click.argument('folder')
+def index(force):
+    """ Index the photos in folder """
+    pass
 
-    parser_index = sub_parser.add_parser("index", help="create index for images in folder")
-    parser_index.add_argument("-f", "--force", help="force reindex all images")
+@click.command()
+@click.option('--tags',  default=False, help="list photo names with tags")
+@click.argument('folder')
+def list():
+    """ List the images by condition"""
+    pass
 
-    parser_list = sub_parser.add_parser("list", help="list images by conditions")
-    parser_list.add_argument("-s", "--size", nargs=3,
-                             help="get the images by size condition, -s greater|less width height")
-    parser_list.add_argument("-T", "--tags", nargs=1, help="get the images by tags")
-    parser_list.add_argument("-t", "--time", nargs=2, help="get the images by time")
-    parser_list.add_argument("--show", help="show image list")
+@click.command()
+def config():
+    """ set or list the configuration """
+    pass
 
-    parser_config = sub_parser.add_parser("config", help="configure photo manager")
-    parser_config.add_argument("--minsize", nargs=1, help="skip the image which is less than min size")
+@click.command()
+@click.argument('files')
+def tag():
+    """ add tags to some photos"""
+    pass
 
-    args = parser.parse_args()
-    return args
-
+@click.command()
+def show():
+    """show photos"""
+    pass
 
 if __name__ == "__main__":
-    args = parse_args()
+    photo_manager_cli.add_command(index)
+    photo_manager_cli.add_command(list)
+    photo_manager_cli.add_command(tag)
+    photo_manager_cli.add_command(config)
+    photo_manager_cli.add_command(show)
+    photo_manager_cli()
 
-    if sys.argv[1] == "index":
-        index_image(args.folder, args.force)
+
 
