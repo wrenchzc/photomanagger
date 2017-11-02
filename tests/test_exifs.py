@@ -23,3 +23,4 @@ def test_file_info():
     file_info = FileInfo('data/test1.jpg')
     assert file_info.md5 == "060e16eb6c7254076752a480607b3d2c"
     assert file_info.size == 762652
+

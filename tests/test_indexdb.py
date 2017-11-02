@@ -45,3 +45,6 @@ def test_single_image():
 def test_folder_files():
     files = get_folder_image_files('data')
     assert len(files) == 6
+    assert files[0] == "noexif.jpg"
+    assert files[5] == "subdir" + os.sep + "dlrb.jpg"
+

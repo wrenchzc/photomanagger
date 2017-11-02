@@ -102,3 +102,7 @@ ENV/
 
 #pycharm project files
 .idea/
+
+*.db
+.cache
+.cache/*
