@@ -86,6 +86,8 @@ class FileInfo:
 def get_folder_image_files(folder):
     files = []
     for fpath, dirs, fs in os.walk(folder):
-        files = files + ["{path}{sep}{filename}".format(path=fpath, sep=os.sep, filename=f)[len(folder + os.sep):] for f
-                         in fs if os.path.splitext(f)[1].lower().strip(".") in SUPPORT_EXTS]
+        files = files + [
+            "{path}{sep}{filename}".format(path=fpath, sep=os.sep, filename=f)[len(folder + os.sep):].replace(os.sep,
+                                                                                                              "/") for f
+            in fs if os.path.splitext(f)[1].lower().strip(".") in SUPPORT_EXTS]
     return files
