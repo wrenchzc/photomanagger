@@ -42,7 +42,7 @@ class TagInfo:
                     return tag.printable
                 else:
                     return values[0]
-            elif isinstance(values, str) or isinstance(values, bytes):
+            elif isinstance(values, str) or isinstance(values, unicode):
                 return values.strip()
             else:
                 return values

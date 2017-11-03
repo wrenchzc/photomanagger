@@ -1,9 +1,11 @@
 import sqlite3
 import os
 from src.pmconst import PMDBNAME
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-
-class IndexDB:
+class IndexDBRaw:
     @staticmethod
     def __ensure_slahs(dir):
         if dir[-1] != os.path.sep:
@@ -91,3 +93,10 @@ class IndexDB:
 
         sql_version_1 = str(sql_init_tables + sql_init_index + sql_init_values).split(";")
         self.execute_multi(sql_version_1 )
+
+
+def get_db_session(full_db_name):
+    engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
+    DB_Session = sessionmaker(bind=engine)
+    session = DB_Session()
+    return session
