@@ -5,11 +5,12 @@ import uuid
 
 from PIL import Image
 
-from src.consts import SUPPORT_EXTS
+from src.pmconst import SUPPORT_EXTS
 
 
 class ImageInfo:
     def __init__(self, filename):
+        self.filename = filename
         self.tags = TagInfo(filename)
         self.fileinfo = FileInfo(filename)
 
@@ -41,7 +42,7 @@ class TagInfo:
                     return tag.printable
                 else:
                     return values[0]
-            elif isinstance(values, str) or isinstance(values, bytes):
+            elif isinstance(values, str) or isinstance(values, unicode):
                 return values.strip()
             else:
                 return values

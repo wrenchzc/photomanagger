@@ -1,9 +1,11 @@
 import sqlite3
 import os
 from src.pmconst import PMDBNAME
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-
-class IndexDB:
+class IndexDBRaw:
     @staticmethod
     def __ensure_slahs(dir):
         if dir[-1] != os.path.sep:
@@ -80,17 +82,21 @@ class IndexDB:
                           "value varchar(128)" \
                           ");"
 
-        sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_name on tbl_images(filename); " \
-                         "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
+        sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
                          "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_uuid on tbl_images(uuid); " \
-                         "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
                          "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_filename on tbl_images(filename); " \
                          "CREATE INDEX IF NOT EXISTS inx_images_camara_type on tbl_images(camera_brand);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_country on tbl_images(country);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_province on tbl_images(province);" \
-                         "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);"
         sql_init_values = "INSERT INTO tbl_options (name, value) values ('version', '1');"
 
         sql_version_1 = str(sql_init_tables + sql_init_index + sql_init_values).split(";")
         self.execute_multi(sql_version_1 )
+
+
+def get_db_session(full_db_name):
+    engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
+    DB_Session = sessionmaker(bind=engine)
+    session = DB_Session()
+    return session
