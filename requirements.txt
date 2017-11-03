@@ -4,3 +4,5 @@ exifread==2.1.2
 click==6.7
 coverage==4.4.1
 mock==2.0.0
+sqlalchemy==1.1.14
+

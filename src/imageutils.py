@@ -5,11 +5,12 @@ import uuid
 
 from PIL import Image
 
-from src.consts import SUPPORT_EXTS
+from src.pmconst import SUPPORT_EXTS
 
 
 class ImageInfo:
     def __init__(self, filename):
+        self.filename = filename
         self.tags = TagInfo(filename)
         self.fileinfo = FileInfo(filename)
 

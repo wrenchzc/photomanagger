@@ -80,15 +80,12 @@ class IndexDB:
                           "value varchar(128)" \
                           ");"
 
-        sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_name on tbl_images(filename); " \
-                         "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
+        sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
                          "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_uuid on tbl_images(uuid); " \
-                         "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
                          "CREATE UNIQUE INDEX IF NOT EXISTS inx_images_filename on tbl_images(filename); " \
                          "CREATE INDEX IF NOT EXISTS inx_images_camara_type on tbl_images(camera_brand);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_country on tbl_images(country);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_province on tbl_images(province);" \
-                         "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);"
         sql_init_values = "INSERT INTO tbl_options (name, value) values ('version', '1');"
 
