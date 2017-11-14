@@ -60,5 +60,10 @@ class CommandIndex(Command):
     def index(self):
         db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
         self.handler = ImageDBHandler(self.folder, db_session)
+        self.handler.on_index_image = self.on_index_image
         self.handler.do_index(self.file_list[self.todo_inx:])
-        db_session.close()
+
+    def on_index_image(self, inx):
+        self._set_todo_index(inx)
+
+

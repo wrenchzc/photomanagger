@@ -15,13 +15,24 @@ class ImageDBHandler:
         """
         self.session = session
         self.folder = folder
+        self._on_index_image = None
+
+    @property
+    def on_index_image(self):
+        return self._on_index_image
+
+    @on_index_image.setter
+    def on_index_image(self, func_on_index_image):
+        assert isinstance(func_on_index_image, function)
+        self._on_index_image = func_on_index_image
 
     def do_index(self, filenames):
-        counter = 0
-        for filename in filenames:
+        for inx, filename in enumerate(filenames):
             self.index_image(self.folder + os.path.sep + filename)
-            counter += 1
-            if counter % 100 == 0:
+            if self.on_index_image:
+                self.on_index_image(inx)
+
+            if inx % 100 == 0:
                 self.session.commit()
 
         self.session.commit()
