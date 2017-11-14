@@ -1,12 +1,18 @@
 import os
 from src.commands.index import CommandIndex
-from src.pmconst import PM_TODO_INDEX, PM_TODO_LIST
+from src.pmconst import PM_TODO_INDEX, PM_TODO_LIST, PMDBNAME
+
+
+
+def _remove_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+
 
 def _clear():
-    if os.path.exists('data/' + PM_TODO_LIST):
-        os.remove('data/' + PM_TODO_LIST)
-    if os.path.exists('data/' + PM_TODO_INDEX):
-        os.remove('data/' + PM_TODO_INDEX)
+    _remove_file('data/' + PM_TODO_LIST)
+    _remove_file('data/' + PM_TODO_INDEX)
+    _remove_file('data/' + PMDBNAME)
 
 
 def test_todolist_and_resume():
@@ -31,3 +37,11 @@ def test_todolist_and_resume():
         _clear()
 
 
+def test_command_index():
+    _clear()
+    try:
+        command_index = CommandIndex('data', {})
+        command_index.do()
+    finally:
+        #_clear()
+        pass

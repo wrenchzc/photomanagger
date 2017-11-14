@@ -4,7 +4,14 @@ from src.db.models import ImageMeta
 from src.imageutils import ImageInfo
 
 def fraction_to_float(fraction):
-    numerator, denominator = fraction.split("/")
+    if fraction is None:
+        return float(0)
+
+    if "/" in fraction:
+        numerator, denominator = fraction.split("/")
+    else:
+        numerator, denominator = float(fraction), 1
+
     return float(numerator) / float(denominator)
 
 def exif_to_model(image_info):

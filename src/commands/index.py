@@ -1,7 +1,9 @@
 import os
-from src.pmconst import PM_TODO_LIST, PM_TODO_INDEX
+from src.pmconst import PM_TODO_LIST, PM_TODO_INDEX, PMDBNAME
 from src.commands.base import Command
 from src.imageutils import get_folder_image_files
+from src.db.imagehandler import ImageDBHandler
+from src.db.dbutils import get_db_session
 
 line_sep = "\r\n"
 
@@ -56,4 +58,7 @@ class CommandIndex(Command):
             self._resume_file_list()
 
     def index(self):
-        pass
+        db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
+        self.handler = ImageDBHandler(self.folder, db_session)
+        self.handler.do_index(self.file_list[self.todo_inx:])
+        db_session.close()

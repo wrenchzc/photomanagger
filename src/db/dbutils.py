@@ -4,6 +4,7 @@ from src.pmconst import PMDBNAME
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from src.db.models import Base
 
 class IndexDBRaw:
     @staticmethod
@@ -16,6 +17,9 @@ class IndexDBRaw:
         self._dbname = self.__ensure_slahs(rootdir) + PMDBNAME
         self.connection = sqlite3.connect(self._dbname)
         self.init()
+
+    def close(self):
+        self.connection.close()
 
     def execute_multi(self, sqls):
         [self.execute(sql, do_commit=False) for sql in sqls]
@@ -97,6 +101,7 @@ class IndexDBRaw:
 
 def get_db_session(full_db_name):
     engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
+    Base.metadata.create_all(engine)
     DB_Session = sessionmaker(bind=engine)
     session = DB_Session()
     return session

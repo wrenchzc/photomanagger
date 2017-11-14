@@ -1,3 +1,4 @@
+import os
 from src.imageutils import ImageInfo
 from src.db.helper import exif_to_model
 
@@ -7,20 +8,21 @@ def quote_str(s):
 
 
 class ImageDBHandler:
-    def __init__(self, session):
+    def __init__(self, folder, session):
         """
         :param session: db session
         :param filenames: list of image filenames
         """
         self.session = session
+        self.folder = folder
 
     def do_index(self, filenames):
         counter = 0
         for filename in filenames:
-            self.index_image(filename)
+            self.index_image(self.folder + os.path.sep + filename)
             counter += 1
             if counter % 100 == 0:
-                self.commit()
+                self.session.commit()
 
         self.session.commit()
 
@@ -29,4 +31,3 @@ class ImageDBHandler:
         image_meta = exif_to_model(image_info)
         self.session.add(image_meta)
         return image_meta
-
