@@ -25,9 +25,16 @@ def _do_init_db():
     values = inx_db.query(query_sql)
     return values
 
+def test_option_todo_index():
+    session = get_db_session(PMDBNAME)
+    image_handler = ImageDBHandler(".", session)
+    image_handler.todo_index = 129
+    assert image_handler.todo_index == 129
+    image_handler.todo_index = 139
+    assert image_handler.todo_index == 139
+
 
 def test_single_image():
-    IndexDBRaw(".")
     session = get_db_session(PMDBNAME)
     image_handler = ImageDBHandler(".", session)
     files = ["tests/data/test1.jpg", "tests/data/test4.jpg"]

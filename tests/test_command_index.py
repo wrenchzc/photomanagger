@@ -1,6 +1,6 @@
 import os
 from src.commands.index import CommandIndex
-from src.pmconst import PM_TODO_INDEX, PM_TODO_LIST, PMDBNAME
+from src.pmconst import PM_TODO_LIST, PMDBNAME
 
 
 
@@ -11,14 +11,13 @@ def _remove_file(filename):
 
 def _clear():
     _remove_file('tests/data/' + PM_TODO_LIST)
-    _remove_file('tests/data/' + PM_TODO_INDEX)
     _remove_file('tests/data/' + PMDBNAME)
 
 
 def test_todolist_and_resume():
     _clear()
+    command_index = CommandIndex('tests/data', {})
     try:
-        command_index = CommandIndex('tests/data', {})
         command_index.get_file_list()
         assert len(command_index.file_list) == 6
         assert command_index.todo_inx == 0
@@ -26,14 +25,13 @@ def test_todolist_and_resume():
         assert len(command_index.file_list) == 6
         assert command_index.todo_inx == 0
 
-        f = open("tests/data/" + PM_TODO_INDEX, "w")
-        f.write("3")
-        f.close()
+        command_index.handler.todo_index = 3
 
         command_index.get_file_list()
         assert len(command_index.file_list) == 6
         assert command_index.todo_inx == 3
     finally:
+        command_index.db_session.close()
         _clear()
 
 
@@ -43,5 +41,4 @@ def test_command_index():
         command_index = CommandIndex('tests/data', {})
         command_index.do()
     finally:
-        #_clear()
-        pass
+        _clear()

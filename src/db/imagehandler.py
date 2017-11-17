@@ -1,7 +1,8 @@
 import os
-import builtins
+from src.pmconst import TODO_INX_NAME
 from src.imageutils import ImageInfo
 from src.db.helper import exif_to_model
+from src.db.models import Option
 
 
 def quote_str(s):
@@ -29,7 +30,7 @@ class ImageDBHandler:
 
     def do_index(self, filenames):
         for inx, filename in enumerate(filenames):
-            self.index_image(self.folder + os.path.sep + filename)
+            self.index_image(self.folder + '/' + filename)
             if self.on_index_image:
                 self.on_index_image(inx)
 
@@ -43,3 +44,23 @@ class ImageDBHandler:
         image_meta = exif_to_model(image_info)
         self.session.add(image_meta)
         return image_meta
+
+    @property
+    def todo_index(self):
+        option_todo_inx = self.session.query(Option).filter(Option.name == TODO_INX_NAME).first()
+        if option_todo_inx:
+            return int(option_todo_inx.value)
+        else:
+            return -1
+
+    @todo_index.setter
+    def todo_index(self, value):
+        assert isinstance(value, int)
+        option = self.session.query(Option).filter(Option.name == TODO_INX_NAME).first()
+        if not option:
+            option = Option()
+            option.name = TODO_INX_NAME
+
+        option.value = str(value)
+        self.session.add(option)
+        self.session.commit()
