@@ -10,15 +10,15 @@ def _remove_file(filename):
 
 
 def _clear():
-    _remove_file('data/' + PM_TODO_LIST)
-    _remove_file('data/' + PM_TODO_INDEX)
-    _remove_file('data/' + PMDBNAME)
+    _remove_file('tests/data/' + PM_TODO_LIST)
+    _remove_file('tests/data/' + PM_TODO_INDEX)
+    _remove_file('tests/data/' + PMDBNAME)
 
 
 def test_todolist_and_resume():
     _clear()
     try:
-        command_index = CommandIndex('data', {})
+        command_index = CommandIndex('tests/data', {})
         command_index.get_file_list()
         assert len(command_index.file_list) == 6
         assert command_index.todo_inx == 0
@@ -26,7 +26,7 @@ def test_todolist_and_resume():
         assert len(command_index.file_list) == 6
         assert command_index.todo_inx == 0
 
-        f = open("data/" + PM_TODO_INDEX, "w")
+        f = open("tests/data/" + PM_TODO_INDEX, "w")
         f.write("3")
         f.close()
 
@@ -40,7 +40,7 @@ def test_todolist_and_resume():
 def test_command_index():
     _clear()
     try:
-        command_index = CommandIndex('data', {})
+        command_index = CommandIndex('tests/data', {})
         command_index.do()
     finally:
         #_clear()

@@ -30,24 +30,24 @@ def test_single_image():
     IndexDBRaw(".")
     session = get_db_session(PMDBNAME)
     image_handler = ImageDBHandler(".", session)
-    files = ["data/test1.jpg", "data/test4.jpg"]
+    files = ["tests/data/test1.jpg", "tests/data/test4.jpg"]
     image_handler.do_index(files)
     query = session.query(ImageMeta)
     image_metas = query.all()
 
     assert len(image_metas) == 2
     assert image_metas[0].id == 1
-    assert image_metas[0].filename == u'./data/test1.jpg'
+    assert image_metas[0].filename == u'./tests/data/test1.jpg'
     assert image_metas[0].image_width == 1200
     assert image_metas[0].image_height == 1600
     assert image_metas[1].id == 2
-    assert image_metas[1].filename == u'./data/test4.jpg'
+    assert image_metas[1].filename == u'./tests/data/test4.jpg'
     assert image_metas[1].image_width == 1057
     assert image_metas[1].image_height == 1123
 
 
 def test_folder_files():
-    files = get_folder_image_files('data')
+    files = get_folder_image_files('tests/data')
     assert len(files) == 6
     assert "noexif.jpg" in files
     assert "subdir/dlrb.jpg" in files
