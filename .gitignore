@@ -103,6 +103,10 @@ ENV/
 #pycharm project files
 .idea/
 
+# tox
+.tox/
+.tox
+
 *.db
 .cache
 .cache/*

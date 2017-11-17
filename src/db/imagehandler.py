@@ -1,4 +1,5 @@
 import os
+import builtins
 from src.imageutils import ImageInfo
 from src.db.helper import exif_to_model
 
@@ -23,7 +24,7 @@ class ImageDBHandler:
 
     @on_index_image.setter
     def on_index_image(self, func_on_index_image):
-        assert isinstance(func_on_index_image, function)
+        assert callable(func_on_index_image)
         self._on_index_image = func_on_index_image
 
     def do_index(self, filenames):

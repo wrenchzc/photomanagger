@@ -18,6 +18,7 @@ class CommandIndex(Command):
         self.index_file_name = "{folder}{sep}{index_file}".format(folder=self.folder, sep=os.path.sep,
                                                                   index_file=PM_TODO_INDEX)
         self.fp_index = None
+        self.db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
 
     def do(self):
         self.get_file_list()
@@ -28,7 +29,7 @@ class CommandIndex(Command):
 
     def _resume_file_list(self):
         with open(self.todo_file_name) as fp_todb:
-            self.file_list = fp_todb.read().split(line_sep)
+            self.file_list = fp_todb.readlines()
 
         self.fp_index = open(self.index_file_name, "a+")
         self.fp_index.seek(0)
@@ -58,8 +59,7 @@ class CommandIndex(Command):
             self._resume_file_list()
 
     def index(self):
-        db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
-        self.handler = ImageDBHandler(self.folder, db_session)
+        self.handler = ImageDBHandler(self.folder, self.db_session)
         self.handler.on_index_image = self.on_index_image
         self.handler.do_index(self.file_list[self.todo_inx:])
 
