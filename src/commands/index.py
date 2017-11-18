@@ -4,6 +4,7 @@ from src.commands.base import Command
 from src.imageutils import get_folder_image_files
 from src.db.imagehandler import ImageDBHandler
 from src.db.dbutils import get_db_session
+from src.helper import current_time_str
 
 class CommandIndex(Command):
     def __init__(self, folder, params):
@@ -47,7 +48,10 @@ class CommandIndex(Command):
             self._resume_file_list()
 
     def index(self):
+        self.handler.set_option_value("INDEX_BEGIN_TIME", current_time_str())
+        self.handler.set_option_value("INDEX_END_TIME", None)
         self.handler.do_index(self.file_list[self.todo_inx:])
+        self.handler.set_option_value("INDEX_END_TIME", current_time_str())
 
     def on_index_image(self, inx):
         self._set_todo_index(inx)

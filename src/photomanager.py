@@ -1,4 +1,5 @@
 import click
+from src.commands.index import CommandIndex
 
 @click.group()
 def photo_manager_cli():
@@ -7,9 +8,10 @@ def photo_manager_cli():
 @click.command()
 @click.option('--force',  default=False, help="force update index of folder")
 @click.argument('folder')
-def index(force):
+def index(folder, force):
     """ Index the photos in folder """
-    pass
+    command_index = CommandIndex(folder, {"force": force})
+    command_index.do()
 
 @click.command()
 @click.option('--tags',  default=False, help="list photo names with tags")
