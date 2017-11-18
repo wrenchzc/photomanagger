@@ -1,9 +1,16 @@
 import os
+import pytest
 from src.db.dbutils import IndexDBRaw, get_db_session
 from src.db.models import ImageMeta
 from src.db.imagehandler import ImageDBHandler
 from src.imageutils import get_folder_image_files
 from src.pmconst import PMDBNAME
+
+
+@pytest.fixture()
+def image_handler():
+    session = get_db_session(PMDBNAME)
+    return ImageDBHandler(".", session)
 
 
 def test_init_db():
@@ -25,21 +32,18 @@ def _do_init_db():
     values = inx_db.query(query_sql)
     return values
 
-def test_option_todo_index():
-    session = get_db_session(PMDBNAME)
-    image_handler = ImageDBHandler(".", session)
+
+def test_option_todo_index(image_handler):
     image_handler.todo_index = 129
     assert image_handler.todo_index == 129
     image_handler.todo_index = 139
     assert image_handler.todo_index == 139
 
 
-def test_single_image():
-    session = get_db_session(PMDBNAME)
-    image_handler = ImageDBHandler(".", session)
+def test_single_image(image_handler):
     files = ["tests/data/test1.jpg", "tests/data/test4.jpg"]
     image_handler.do_index(files)
-    query = session.query(ImageMeta)
+    query = image_handler.session.query(ImageMeta)
     image_metas = query.all()
 
     assert len(image_metas) == 2
@@ -58,3 +62,12 @@ def test_folder_files():
     assert len(files) == 6
     assert "noexif.jpg" in files
     assert "subdir/dlrb.jpg" in files
+
+
+def test_option_values(image_handler):
+    value = image_handler.get_option_value("NO_FIELD")
+    assert value is None
+
+    image_handler.set_option_value("TEST_FIELD", "test")
+    value = image_handler.get_option_value("TEST_FIELD")
+    assert value == "test"

@@ -47,20 +47,28 @@ class ImageDBHandler:
 
     @property
     def todo_index(self):
-        option_todo_inx = self.session.query(Option).filter(Option.name == TODO_INX_NAME).first()
-        if option_todo_inx:
-            return int(option_todo_inx.value)
+        value = self.get_option_value(TODO_INX_NAME)
+        if value:
+            return int(value)
         else:
             return -1
 
     @todo_index.setter
     def todo_index(self, value):
         assert isinstance(value, int)
-        option = self.session.query(Option).filter(Option.name == TODO_INX_NAME).first()
+        self.set_option_value(TODO_INX_NAME, value)
+
+    def set_option_value(self, name, value):
+        option = self.session.query(Option).filter(Option.name == name).first()
         if not option:
             option = Option()
-            option.name = TODO_INX_NAME
+            option.name = name
 
         option.value = str(value)
         self.session.add(option)
         self.session.commit()
+
+    def get_option_value(self, name):
+        option_todo_inx = self.session.query(Option).filter(Option.name == name).first()
+        if option_todo_inx:
+            return option_todo_inx.value
