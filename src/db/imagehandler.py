@@ -30,7 +30,7 @@ class ImageDBHandler:
 
     def do_index(self, filenames):
         for inx, filename in enumerate(filenames):
-            self.index_image(self.folder + '/' + filename)
+            self.index_image(filename)
             if self.on_index_image:
                 self.on_index_image(inx)
 
@@ -40,8 +40,9 @@ class ImageDBHandler:
         self.session.commit()
 
     def index_image(self, filename):
-        image_info = ImageInfo(filename)
+        image_info = ImageInfo(self.folder + "/" + filename)
         image_meta = exif_to_model(image_info)
+        image_meta.filename = filename
         self.session.add(image_meta)
         return image_meta
 
