@@ -26,6 +26,7 @@ class ImageDBHandler:
 
     def do_index(self, filenames):
         for inx, filename in enumerate(filenames):
+            filename = filename.strip()
             self.index_image(filename)
             if self.on_index_image:
                 self.on_index_image(inx)
