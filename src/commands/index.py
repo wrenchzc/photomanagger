@@ -56,6 +56,8 @@ class CommandIndex(Command):
         self.handler.set_option_value("INDEX_END_TIME", None)
         self.handler.do_index(self.file_list[self.todo_inx:])
         self.handler.set_option_value("INDEX_END_TIME", current_time_str())
+        os.remove(self.todo_file_name)
+        self.handler.todo_index = -1
 
     def on_index_image(self, inx):
         self._set_todo_index(inx)

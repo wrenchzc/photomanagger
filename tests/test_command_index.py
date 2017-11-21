@@ -1,6 +1,7 @@
 import os
 from src.commands.index import CommandIndex
 from src.pmconst import PM_TODO_LIST, PMDBNAME
+from src.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'
 
@@ -49,3 +50,12 @@ def test_wrong_todo_inx():
 def test_command_index():
     command_index = CommandIndex(cmd_inx_test_root, {})
     command_index.do()
+    assert command_index.handler.todo_index == -1
+    assert not os.path.exists(command_index.todo_file_name)
+    assert command_index.handler.session.query(ImageMeta).count() == 6
+
+    command_index = CommandIndex(cmd_inx_test_root, {})
+    command_index.do()
+    assert command_index.handler.todo_index == -1
+    assert not os.path.exists(command_index.todo_file_name)
+    assert command_index.handler.session.query(ImageMeta).count() == 6

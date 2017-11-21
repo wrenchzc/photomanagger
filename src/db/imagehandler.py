@@ -1,8 +1,8 @@
-import os
 from src.pmconst import TODO_INX_NAME
 from src.imageutils import ImageInfo
 from src.db.helper import exif_to_model
-from src.db.models import Option
+from src.db.models import Option, ImageMeta
+from src.helper import get_file_md5
 
 
 class ImageDBHandler:
@@ -36,11 +36,14 @@ class ImageDBHandler:
         self.session.commit()
 
     def index_image(self, filename):
-        image_info = ImageInfo(self.folder + "/" + filename)
-        image_meta = exif_to_model(image_info)
-        image_meta.filename = filename
-        self.session.add(image_meta)
-        return image_meta
+        image_meta = self.session.query(ImageMeta).filter(ImageMeta.filename == filename).first()
+        full_file_name = self.folder + '/' + filename
+        if not image_meta or image_meta.md5 != get_file_md5(full_file_name):
+            image_info = ImageInfo(full_file_name)
+            image_meta = exif_to_model(image_info)
+            image_meta.filename = filename
+            self.session.add(image_meta)
+            return image_meta
 
     @property
     def todo_index(self):

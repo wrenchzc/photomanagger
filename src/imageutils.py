@@ -1,11 +1,11 @@
 import exifread
-import hashlib
 import os
 import uuid
 
 from PIL import Image
 
 from src.pmconst import SUPPORT_EXTS
+from src.helper import get_file_md5
 
 
 class ImageInfo:
@@ -69,18 +69,11 @@ class TagInfo:
 
 
 class FileInfo:
-    @staticmethod
-    def _get_file_md5(filename):
-        with open(filename, "rb") as f:
-            m = hashlib.md5()
-            m.update(f.read())
-            return m.hexdigest()
-
     def __init__(self, filename):
         self.size = os.path.getsize(filename)
         self.modify_time = os.path.getmtime(filename)
         self.create_time = os.path.getctime(filename)
-        self.md5 = self._get_file_md5(filename)
+        self.md5 = get_file_md5(filename)
         self.uuid = str(uuid.uuid1())
 
 
