@@ -5,10 +5,6 @@ from src.db.helper import exif_to_model
 from src.db.models import Option
 
 
-def quote_str(s):
-    return '"{s}"'.format(s=s)
-
-
 class ImageDBHandler:
     def __init__(self, folder, session):
         """

@@ -6,13 +6,14 @@ from src.db.imagehandler import ImageDBHandler
 from src.db.dbutils import get_db_session
 from src.helper import current_time_str
 
+
 class CommandIndex(Command):
     def __init__(self, folder, params):
         Command.__init__(self, folder, params)
         self.todo_inx = 0
         self.force = params.get("force", False)
-        self.todo_file_name = "{folder}{sep}{list_file}".format(folder=self.folder, sep=os.path.sep,
-                                                                list_file=PM_TODO_LIST)
+        self.todo_file_name = os.path.expanduser("{folder}{sep}{list_file}".format(folder=self.folder, sep=os.path.sep,
+                                                                                   list_file=PM_TODO_LIST))
         self.fp_index = None
         self.db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
         self.handler = ImageDBHandler(self.folder, self.db_session)
@@ -42,6 +43,9 @@ class CommandIndex(Command):
         self._set_todo_index(0)
 
     def get_file_list(self):
+        if not os.path.exists(self.todo_file_name) and self.handler.todo_index != -1:
+            self.handler.todo_index = -1
+
         if self.handler.todo_index == -1 or self.force:
             self._get_file_list_from_folder()
         else:
@@ -55,5 +59,4 @@ class CommandIndex(Command):
 
     def on_index_image(self, inx):
         self._set_todo_index(inx)
-
-
+        print("{filename}   {inx}/{total}".format(filename=self.file_list[inx], inx=inx, total=len(self.file_list)))

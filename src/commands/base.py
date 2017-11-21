@@ -1,6 +1,8 @@
+import os
+
 class Command(object):
     def __init__(self, folder, params):
-        self.folder = folder.rstrip("/\\")
+        self.folder = os.path.expanduser(folder.rstrip("/\\"))
         self.params = params
 
     def do(self):

@@ -100,6 +100,7 @@ class IndexDBRaw:
 
 
 def get_db_session(full_db_name):
+    full_db_name = os.path.expanduser(full_db_name)
     engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
     Base.metadata.create_all(engine)
     DB_Session = sessionmaker(bind=engine)
