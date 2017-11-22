@@ -42,24 +42,40 @@ class TagInfo:
                     return tag.printable
                 else:
                     return values[0]
-            elif isinstance(values, str) or isinstance(values, unicode):
+            elif isinstance(values, str):
                 return values.strip()
+            elif isinstance(values, bytes):
+                return str(values).strip()
             else:
                 return values
 
     def _init_props_by_pil(self, f):
-        img = Image.open(f)
-        self.image_width = img.width
-        self.image_height = img.height
+        try:
+            img = Image.open(f)
+            self.image_width = img.width
+            self.image_height = img.height
+        except OSError as e:
+            self.image_width = 0
+            self.image_height = 0
+            print("error when open image {filename} , message is {message}".format(filename=f.name, message=str(e)))
 
     def __init__(self, filename):
         self.tags = None
+        self.has_exif = False
 
         with open(filename, "rb") as f:
-            tags = exifread.process_file(f, details=True)
-            self.has_exif = bool(tags)
-            self.tags = tags
-            if tags:
+            try:
+                tags = exifread.process_file(f, details=True)
+                self.has_exif = bool(tags)
+                self.tags = tags
+            except KeyError:
+                print("can not read exif from {filename} ".format(filename=filename))
+            except TypeError:
+                print("can not read exif from {filename} ".format(filename=filename))
+            except IndexError:
+                print("can not read exif from {filename} ".format(filename=filename))
+
+            if self.tags:
                 self._init_props_by_exif_tags()
             else:
                 self._init_props_by_pil(f)
