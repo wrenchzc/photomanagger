@@ -13,7 +13,10 @@ def fraction_to_float(fraction):
     else:
         numerator, denominator = float(fraction), 1
 
-    return float(numerator) / float(denominator)
+    if float(denominator) != 0.0:
+        return float(numerator) / float(denominator)
+    else:
+        return None
 
 
 def exif_to_model(image_info):

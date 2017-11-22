@@ -18,6 +18,7 @@ class CommandIndex(Command):
         self.db_session = get_db_session(self.folder + os.path.sep + PMDBNAME)
         self.handler = ImageDBHandler(self.folder, self.db_session)
         self.handler.on_index_image = self.on_index_image
+        self.restart_inx = 0
 
     def do(self):
         self.get_file_list()
@@ -31,6 +32,7 @@ class CommandIndex(Command):
             self.file_list = fp_todb.readlines()
 
         self.todo_inx = self.handler.todo_index
+        self.restart_inx = self.todo_inx
 
     def _set_todo_index(self, index_num):
         self.handler.todo_index = index_num
@@ -60,5 +62,8 @@ class CommandIndex(Command):
         self.handler.todo_index = -1
 
     def on_index_image(self, inx):
-        self._set_todo_index(inx)
-        print("{filename}   {inx}/{total}".format(filename=self.file_list[inx], inx=inx, total=len(self.file_list)))
+        real_inx = inx + self.restart_inx
+        if real_inx % 100 == 0:
+            self._set_todo_index(real_inx)
+        print("{filename}   {inx}/{total}".format(filename=self.file_list[inx + self.restart_inx],
+                                                  inx=inx + self.restart_inx, total=len(self.file_list)))
