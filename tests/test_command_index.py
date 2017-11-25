@@ -1,14 +1,17 @@
 import os
-from src.commands.index import CommandIndex
-from src.pmconst import PM_TODO_LIST, PMDBNAME
-from src.db.models import ImageMeta
+from photomanager.commands.index import CommandIndex
+from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
+from photomanager.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'
 
 
 def _remove_file(filename):
     if os.path.exists(filename):
-        os.remove(filename)
+        try:
+            os.remove(filename)
+        except PermissionError:
+            pass
 
 
 def _clear():

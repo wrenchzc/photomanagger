@@ -1,5 +1,5 @@
 import click
-from src.commands.index import CommandIndex
+from photomanager.commands.index import CommandIndex
 
 @click.group()
 def photo_manager_cli():

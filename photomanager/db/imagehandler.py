@@ -1,8 +1,8 @@
-from src.pmconst import TODO_INX_NAME
-from src.imageutils import ImageInfo
-from src.db.helper import exif_to_model
-from src.db.models import Option, ImageMeta
-from src.helper import get_file_md5
+from photomanager.pmconst import TODO_INX_NAME
+from photomanager.imageutils import ImageInfo
+from photomanager.db.helper import exif_to_model
+from photomanager.db.models import Option, ImageMeta
+from photomanager.helper import get_file_md5
 
 
 class ImageDBHandler:

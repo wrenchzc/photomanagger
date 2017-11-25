@@ -1,10 +1,10 @@
 import sqlite3
 import os
-from src.pmconst import PMDBNAME
+from photomanager.pmconst import PMDBNAME
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from src.db.models import Base
+from photomanager.db.models import Base
 
 class IndexDBRaw:
     @staticmethod

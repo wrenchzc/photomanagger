@@ -4,8 +4,8 @@ import uuid
 
 from PIL import Image
 
-from src.pmconst import SUPPORT_EXTS
-from src.helper import get_file_md5
+from photomanager.pmconst import SUPPORT_EXTS
+from photomanager.helper import get_file_md5
 
 
 class ImageInfo:

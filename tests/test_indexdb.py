@@ -1,10 +1,10 @@
 import os
 import pytest
-from src.db.dbutils import IndexDBRaw, get_db_session
-from src.db.models import ImageMeta
-from src.db.imagehandler import ImageDBHandler
-from src.imageutils import get_folder_image_files
-from src.pmconst import PMDBNAME
+from photomanager.db.dbutils import IndexDBRaw, get_db_session
+from photomanager.db.models import ImageMeta
+from photomanager.db.imagehandler import ImageDBHandler
+from photomanager.imageutils import get_folder_image_files
+from photomanager.pmconst import PMDBNAME
 
 
 @pytest.fixture()
