@@ -1,5 +1,6 @@
 import click
 from photomanager.commands.index import CommandIndex
+from photomanager.commands.list import CommandList
 
 @click.group()
 def photo_manager_cli():
@@ -15,10 +16,12 @@ def index(folder, force):
 
 @click.command()
 @click.option('--tags',  default=False, help="list photo names with tags")
+@click.option('--duplicate',  default=False, help="list duplicate photos")
 @click.argument('folder')
-def list():
+def list(folder, tags, duplicate):
     """ List the images by condition"""
-    pass
+    command_index = CommandList(folder, {"tags": tags, "duplicate": duplicate})
+    command_index.do()
 
 @click.command()
 def config():
