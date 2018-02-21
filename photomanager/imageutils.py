@@ -5,7 +5,7 @@ import uuid
 from PIL import Image
 
 from photomanager.pmconst import SUPPORT_EXTS
-from photomanager.helper import get_file_md5
+from photomanager.helper import get_file_md5, get_timestamp_from_str
 
 
 class ImageInfo:
@@ -93,11 +93,29 @@ class FileInfo:
         self.uuid = str(uuid.uuid1())
 
 
-def get_folder_image_files(folder):
+def get_folder_image_files(folder: str, last_index_time_str: str = None) -> list:
     files = []
     for fpath, dirs, fs in os.walk(folder):
         files = files + [
             "{path}{sep}{filename}".format(path=fpath, sep=os.sep, filename=f)[len(folder + os.sep):].replace(os.sep,
                                                                                                               "/") for f
             in fs if os.path.splitext(f)[1].lower().strip(".") in SUPPORT_EXTS]
-    return files
+
+    last_time_stamp = get_timestamp_from_str(last_index_time_str)
+    if last_time_stamp > 0:
+        return _filter_file_by_mtime(folder, files, last_time_stamp)
+    else:
+        return files
+
+
+def _filter_file_by_mtime(folder: str, files: list, last_time_stamp: float) -> list:
+    filter_files = []
+    for file_name in files:
+        try:
+            file_mtime = os.path.getmtime(folder + os.sep + file_name)
+        except OSError:
+            file_mtime = 0
+
+        if file_mtime > last_time_stamp:
+            filter_files.append(file_name)
+    return filter_files
