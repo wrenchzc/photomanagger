@@ -1,4 +1,5 @@
 import os
+import shutil
 from photomanager.commands.index import CommandIndex
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.db.models import ImageMeta
@@ -17,6 +18,7 @@ def _remove_file(filename):
 def _clear():
     _remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
     _remove_file(cmd_inx_test_root + '/' + PMDBNAME)
+    _remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
 
 
 def setup_function():
@@ -52,13 +54,23 @@ def test_wrong_todo_inx():
 
 def test_command_index():
     command_index = CommandIndex(cmd_inx_test_root, {})
-    command_index.do()
+    cnt = command_index.do()
     assert command_index.handler.todo_index == -1
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == 6
+    assert cnt == 6
 
     command_index = CommandIndex(cmd_inx_test_root, {})
-    command_index.do()
+    cnt = command_index.do()
     assert command_index.handler.todo_index == -1
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == 6
+    assert cnt == 0
+
+    shutil.copy(cmd_inx_test_root + "/test1.jpg", cmd_inx_test_root + "/test_new.jpg")
+    command_index = CommandIndex(cmd_inx_test_root, {})
+    cnt = command_index.do()
+    assert command_index.handler.todo_index == -1
+    assert not os.path.exists(command_index.todo_file_name)
+    assert command_index.handler.session.query(ImageMeta).count() == 7
+    assert cnt == 1

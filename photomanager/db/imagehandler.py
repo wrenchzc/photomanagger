@@ -25,9 +25,11 @@ class ImageDBHandler:
         self._on_index_image = func_on_index_image
 
     def do_index(self, filenames):
+        cnt = 0
         for inx, filename in enumerate(filenames):
             filename = filename.strip()
             self.index_image(filename)
+            cnt += 1
             if self.on_index_image:
                 self.on_index_image(inx)
 
@@ -35,6 +37,7 @@ class ImageDBHandler:
                 self.session.commit()
 
         self.session.commit()
+        return cnt
 
     def index_image(self, filename):
         image_meta = self.session.query(ImageMeta).filter(ImageMeta.filename == filename).first()
@@ -59,7 +62,7 @@ class ImageDBHandler:
         assert isinstance(value, int)
         self.set_option_value(TODO_INX_NAME, value)
 
-    def set_option_value(self, name, value):
+    def set_option_value(self, name: str, value):
         option = self.session.query(Option).filter(Option.name == name).first()
         if not option:
             option = Option()
@@ -69,7 +72,7 @@ class ImageDBHandler:
         self.session.add(option)
         self.session.commit()
 
-    def get_option_value(self, name):
+    def get_option_value(self, name) -> str:
         option_todo_inx = self.session.query(Option).filter(Option.name == name).first()
         if option_todo_inx:
             return option_todo_inx.value

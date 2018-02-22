@@ -18,7 +18,7 @@ class CommandIndex(Command):
 
     def do(self):
         self.get_file_list()
-        self.index()
+        return self.index()
 
     def _todo_file_existed(self):
         return os.path.exists(self.todo_file_name)
@@ -57,10 +57,11 @@ class CommandIndex(Command):
     def index(self):
         self.handler.set_option_value("INDEX_BEGIN_TIME", current_time_str())
         self.handler.set_option_value("INDEX_END_TIME", None)
-        self.handler.do_index(self.file_list[self.todo_inx:])
+        cnt = self.handler.do_index(self.file_list[self.todo_inx:])
         self.handler.set_option_value("INDEX_END_TIME", current_time_str())
         os.remove(self.todo_file_name)
         self.handler.todo_index = -1
+        return cnt
 
     def on_index_image(self, inx):
         real_inx = inx + self.restart_inx

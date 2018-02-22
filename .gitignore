@@ -110,3 +110,5 @@ ENV/
 *.db
 .cache
 .cache/*
+
+*.out
