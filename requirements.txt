@@ -1,4 +1,4 @@
-pillow==4.2.1
+pillow==5.2.0
 exifread==2.1.2
 click==6.7
 coverage==4.4.1
