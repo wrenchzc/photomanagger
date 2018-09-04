@@ -24,7 +24,7 @@ class CommandIndex(Command):
         return os.path.exists(self.todo_file_name)
 
     def _resume_file_list(self):
-        with open(self.todo_file_name) as fp_todb:
+        with open(self.todo_file_name, encoding='utf-8') as fp_todb:
             self.file_list = fp_todb.readlines()
 
         self.todo_inx = self.handler.todo_index
@@ -40,7 +40,7 @@ class CommandIndex(Command):
             last_index_time_str = self.handler.get_option_value("INDEX_END_TIME")
 
         self.file_list = get_folder_image_files(self.folder, last_index_time_str)
-        with open(self.todo_file_name, "w") as fp_todo:
+        with open(self.todo_file_name, "w", encoding='utf-8') as fp_todo:
             fp_todo.write("\n".join(self.file_list))
 
         self._set_todo_index(0)
