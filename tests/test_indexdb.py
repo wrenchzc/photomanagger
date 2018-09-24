@@ -1,4 +1,5 @@
 import os
+import shutil
 import pytest
 from photomanager.db.dbutils import IndexDBRaw, get_db_session
 from photomanager.db.models import ImageMeta
@@ -71,3 +72,18 @@ def test_option_values(image_handler):
     image_handler.set_option_value("TEST_FIELD", "test")
     value = image_handler.get_option_value("TEST_FIELD")
     assert value == "test"
+
+def test_image_modified(image_handler):
+    shutil.copy("tests/data/test1modified", "tests/data/test1.jpg")
+    try:
+        files = ["tests/data/test1.jpg"]
+        image_handler.do_index(files)
+        query = image_handler.session.query(ImageMeta)
+        image_metas = query.all()
+        assert len(image_metas) == 2
+        assert image_metas[0].id == 1
+        assert image_metas[0].filename == u'tests/data/test1.jpg'
+        assert image_metas[0].image_width == 1200
+        assert image_metas[0].image_height == 1600
+    finally:
+        shutil.copy("tests/data/test1bak", "tests/data/test1.jpg")

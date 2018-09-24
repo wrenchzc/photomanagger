@@ -40,14 +40,19 @@ class ImageDBHandler:
         return cnt
 
     def index_image(self, filename):
-        image_meta = self.session.query(ImageMeta).filter(ImageMeta.filename == filename).first()
+        image_meta_existed = self.session.query(ImageMeta).filter(ImageMeta.filename == filename).first()
         full_file_name = self.folder + '/' + filename
-        if not image_meta or image_meta.md5 != get_file_md5(full_file_name):
+        if not image_meta_existed or image_meta_existed.md5 != get_file_md5(full_file_name):
             image_info = ImageInfo(full_file_name)
-            image_meta = exif_to_model(image_info)
-            image_meta.filename = filename
-            self.session.add(image_meta)
-            return image_meta
+            image_meta_new = exif_to_model(image_info)
+            image_meta_new.filename = filename
+
+            if image_meta_existed:
+                image_meta_new.id = image_meta_existed.id
+                image_meta_new.uuid = image_meta_existed.uuid
+
+            self.session.merge(image_meta_new)
+            return image_meta_new
 
     @property
     def todo_index(self):
@@ -64,6 +69,7 @@ class ImageDBHandler:
 
     def set_option_value(self, name: str, value):
         option = self.session.query(Option).filter(Option.name == name).first()
+
         if not option:
             option = Option()
             option.name = name
