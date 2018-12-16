@@ -5,6 +5,7 @@ coverage==4.4.1
 mock==2.0.0
 sqlalchemy==1.2.15
 dlib==19.16.0
-facenet_recognition=1.2.3
+face_recognition==1.2.3
 pytest==4.0.2
 pytest-cov==2.6.0
+tox==3.6.0

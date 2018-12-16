@@ -7,10 +7,40 @@ a comand line photo manager
 1. 查重, 使用md5查重. 
 2. 命令行批量标签.
 3. 命令汗批量操作，如重命名，批量改大小等
-4. 使用ProductAI自动打标签.
-5. 使用ProductAI进行人脸识别.
-6. 人脸聚类.
+4. 人脸识别.
+5. 人脸聚类.
+6. 使用ProductAI自动打标签.
 
 使用sqlite做数据库, 看看sqlite在几百万这个量级的性能如何
 
-gogogo
+#### 命令行格式初定如下:
+```
+photo_manager command filter --option
+```
+#### command暂定以下几个
+- config set or list the configuration
+- index Index the photos in folder
+- list List the images by condition
+- show show photos
+- tag add tags to some photos
+
+#### filter格式
+```
+field.condition:value
+```
+可以用空格分隔多个filter, 多个filter之间是and的关系
+##### field支持以下输入：
+- time      时间
+- person    人物
+- tag       标签
+- size      尺寸
+- brand     相机品牌
+- model     相机型号
+- city      城市
+##### condition支持以下输入:
+- eq 等于
+- gte 大于等于
+- ge  大于
+- lt  小于
+- lte 小于等于
+- sw  以xxx开始
