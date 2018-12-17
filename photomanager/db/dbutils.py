@@ -84,6 +84,14 @@ class IndexDBRaw:
                           "id integer primary key AUTOINCREMENT," \
                           "name varchar(32)," \
                           "value varchar(128)" \
+                          ");" \
+                          "CREATE TABLE IF NOT EXISTS tbl_person" \
+                          "(" \
+                          "id integer primary key AUTOINCREMENT," \
+                          "name varchar(32)," \
+                          "sex, " \
+                          "varchar(8)," \
+                          "img_list text" \
                           ");"
 
         sql_init_index = "CREATE INDEX IF NOT EXISTS inx_images_md5 on tbl_images(md5); " \
