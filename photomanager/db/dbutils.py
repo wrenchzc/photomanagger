@@ -100,7 +100,9 @@ class IndexDBRaw:
                          "CREATE INDEX IF NOT EXISTS inx_images_camara_type on tbl_images(camera_brand);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_country on tbl_images(country);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_province on tbl_images(province);" \
-                         "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);"
+                         "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);" \
+                         "CREATE UNIQUE INDEX IF NOT EXISTS INX_PERSON_NAME ON TBL_PERSON(NAME)"
+
         sql_init_values = "INSERT INTO tbl_options (name, value) values ('version', '1');"
 
         sql_version_1 = str(sql_init_tables + sql_init_index + sql_init_values).split(";")
