@@ -12,6 +12,7 @@ class CommandIndex(Command):
         self.todo_inx = 0
         self.force = params.get("force", False)
         self.skip_existed = params.get("skip_existed", False)
+        self.clean = params.get("clean", False)
         self.handler = ImageDBHandler(folder, self.db_session, skip_existed=self.skip_existed)
 
         self.todo_file_name = os.path.expanduser("{folder}{sep}{list_file}".format(folder=self.folder, sep=os.path.sep,
@@ -23,14 +24,14 @@ class CommandIndex(Command):
     def do(self):
         self.get_file_list()
         index_count = self.index()
-        del_count = self.clean()
+        del_count = self.do_clean() if self.clean else 0
         return index_count, del_count
 
-    def clean(self):
+    def do_clean(self):
         all_file_list = get_folder_image_files(self.folder, 0)
 
         images_meta = self.db_session.query(ImageMeta).all()
-        total_count = images_meta.count()
+        total_count = len(images_meta)
         del_count = 0
         count = 0
         for image_meta in images_meta:
@@ -43,9 +44,6 @@ class CommandIndex(Command):
                 print("delete recode for {}".format(image_meta.filename))
         self.db_session.commit()
         return del_count
-
-    def _todo_file_existed(self):
-        return os.path.exists(self.todo_file_name)
 
     def _resume_file_list(self):
         with open(self.todo_file_name, encoding='utf-8') as fp_todb:

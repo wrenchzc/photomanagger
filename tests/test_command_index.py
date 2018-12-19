@@ -58,14 +58,14 @@ def test_command_index():
     assert command_index.handler.todo_index == -1
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == 6
-    assert cnt == 6
+    assert cnt[0] == 6
 
     command_index = CommandIndex(cmd_inx_test_root, {})
     cnt = command_index.do()
     assert command_index.handler.todo_index == -1
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == 6
-    assert cnt == 0
+    assert cnt[0] == 0
 
     shutil.copy(cmd_inx_test_root + "/test1.jpg", cmd_inx_test_root + "/test_new.jpg")
     command_index = CommandIndex(cmd_inx_test_root, {})
@@ -73,4 +73,12 @@ def test_command_index():
     assert command_index.handler.todo_index == -1
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == 7
-    assert cnt == 1
+    assert cnt[0] == 1
+
+    os.remove(cmd_inx_test_root + "/test_new.jpg")
+    command_index = CommandIndex(cmd_inx_test_root, {"clean": True})
+    cnt = command_index.do()
+    assert command_index.handler.todo_index == -1
+    assert not os.path.exists(command_index.todo_file_name)
+    assert command_index.handler.session.query(ImageMeta).count() == 6
+    assert cnt[1] == 1
