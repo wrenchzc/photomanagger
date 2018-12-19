@@ -4,7 +4,7 @@ from photomanager.commands.base import Command
 from photomanager.imageutils import get_folder_image_files
 from photomanager.helper import current_time_str
 from photomanager.db.imagehandler import ImageDBHandler
-
+from photomanager.db.models import ImageMeta
 
 class CommandIndex(Command):
     def __init__(self, folder, params):
@@ -22,7 +22,27 @@ class CommandIndex(Command):
 
     def do(self):
         self.get_file_list()
-        return self.index()
+        index_count = self.index()
+        del_count = self.clean()
+        return index_count, del_count
+
+    def clean(self):
+        all_file_list = get_folder_image_files(self.folder, 0)
+
+        images_meta = self.db_session.query(ImageMeta).all()
+        total_count = images_meta.count()
+        del_count = 0
+        count = 0
+        for image_meta in images_meta:
+            count += 1
+            if count % 1000 == 0:
+                print(f"{count}/{total_count}")
+            if image_meta.filename not in all_file_list:
+                self.db_session.delete(image_meta)
+                del_count += 1
+                print("delete recode for {}".format(image_meta.filename))
+        self.db_session.commit()
+        return del_count
 
     def _todo_file_existed(self):
         return os.path.exists(self.todo_file_name)
