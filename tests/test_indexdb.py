@@ -11,7 +11,7 @@ from photomanager.pmconst import PMDBNAME
 @pytest.fixture()
 def image_handler():
     session = get_db_session(PMDBNAME)
-    return ImageDBHandler(".", session)
+    return ImageDBHandler(".", session, False)
 
 
 def test_init_db():

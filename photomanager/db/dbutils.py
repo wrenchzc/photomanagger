@@ -89,8 +89,7 @@ class IndexDBRaw:
                           "(" \
                           "id integer primary key AUTOINCREMENT," \
                           "name varchar(32)," \
-                          "sex, " \
-                          "varchar(8)," \
+                          "sex varchar(8)," \
                           "img_list text" \
                           ");"
 
@@ -101,7 +100,7 @@ class IndexDBRaw:
                          "CREATE INDEX IF NOT EXISTS inx_images_country on tbl_images(country);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_province on tbl_images(province);" \
                          "CREATE INDEX IF NOT EXISTS inx_images_city on tbl_images(city);" \
-                         "CREATE UNIQUE INDEX IF NOT EXISTS INX_PERSON_NAME ON TBL_PERSON(NAME)"
+                         "CREATE UNIQUE INDEX IF NOT EXISTS INX_PERSON_NAME ON TBL_PERSON(NAME);"
 
         sql_init_values = "INSERT INTO tbl_options (name, value) values ('version', '1');"
 

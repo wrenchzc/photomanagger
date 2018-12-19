@@ -6,13 +6,14 @@ from photomanager.helper import get_file_md5
 
 
 class ImageDBHandler:
-    def __init__(self, folder, session):
+    def __init__(self, folder, session, skip_existed):
         """
         :param session: db session
         :param filenames: list of image filenames
         """
         self.session = session
         self.folder = folder
+        self.skip_existed = skip_existed
         self._on_index_image = None
 
     @property

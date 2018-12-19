@@ -8,10 +8,11 @@ def photo_manager_cli():
 
 @click.command()
 @click.option('--force',  default=False, help="force update index of folder")
+@click.option('--skip_existed',  default=False, help="skip existed index")
 @click.argument('folder')
-def index(folder, force):
+def index(folder, force, skip_existed):
     """ Index the photos in folder """
-    command_index = CommandIndex(folder, {"force": force})
+    command_index = CommandIndex(folder, {"force": force, "skip_existed": skip_existed})
     command_index.do()
 
 @click.command()

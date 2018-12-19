@@ -52,7 +52,7 @@ class Option(Base):
     value = Column(String(32))
 
 class Person(Base):
-    __tablename__ = "tbl_options"
+    __tablename__ = "tbl_person"
 
     id = Column(INTEGER, primary_key=True, autoincrement=True)
     name = Column(String(32), unique=True)
