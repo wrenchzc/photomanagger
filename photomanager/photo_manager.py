@@ -9,9 +9,9 @@ def photo_manager_cli():
 
 
 @click.command()
-@click.option('--force', default=False, help="force update index of folder")
-@click.option('--skip_existed', default=False, help="skip existed index")
-@click.option('--clean', default=False, help="delete obsolete records")
+@click.option('--force', is_flag=True, help="force update index of folder")
+@click.option('--skip_existed', is_flag=True, help="skip existed index")
+@click.option('--clean', is_flag=True, help="delete obsolete records")
 @click.argument('folder')
 def index(folder, force, skip_existed, clean):
     """ Index the photos in folder """
