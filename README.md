@@ -18,11 +18,12 @@ a comand line photo manager
 photo_manager command filter --option
 ```
 #### command暂定以下几个
-- config set or list the configuration
-- index Index the photos in folder
-- list List the images by condition
-- show show photos
-- tag add tags to some photos
+- **config** set or list the configuration
+- **index** Index the photos in folder
+- **list** List the images by condition
+- **show** show photos
+- **tag** add tags to some photos
+- **organize** organize photos, such as dedup, merge photo and so on
 
 #### filter格式
 ```
