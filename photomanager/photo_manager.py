@@ -1,6 +1,7 @@
 import click
 from photomanager.commands.index import CommandIndex
 from photomanager.commands.list import CommandList
+from photomanager.commands.remove_dup import CommandRemoveDuplicate
 
 
 @click.group()
@@ -27,6 +28,14 @@ def list(folder, tags, duplicate):
     """ List the images by condition"""
     command_index = CommandList(folder, {"tags": tags, "duplicate": duplicate})
     command_index.do()
+
+
+@click.command()
+@click.option('--group_by', type=click.Choice(['hash', 'folder', 'filename']))
+@click.argument('folder', default="./")
+def remove_duplicate(folder, group_by):
+    command_remove_dup = CommandRemoveDuplicate(folder, {"group_by": group_by})
+    command_remove_dup.do()
 
 
 @click.command()

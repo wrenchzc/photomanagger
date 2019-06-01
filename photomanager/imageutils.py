@@ -4,7 +4,7 @@ import uuid
 
 from PIL import Image
 
-from photomanager.pmconst import SUPPORT_EXTS
+from photomanager.pmconst import SUPPORT_EXTS, SKIP_LIST
 from photomanager.helper import get_file_md5, get_timestamp_from_str
 
 
@@ -99,13 +99,25 @@ def get_folder_image_files(folder: str, last_index_time_str: str = None) -> list
         files = files + [
             "{path}{sep}{filename}".format(path=fpath, sep=os.sep, filename=f)[len(folder + os.sep):].replace(os.sep,
                                                                                                               "/") for f
-            in fs if os.path.splitext(f)[1].lower().strip(".") in SUPPORT_EXTS]
+            in fs if _ext_is_supported(f) and not _filename_is_blocked(f)]
 
     last_time_stamp = get_timestamp_from_str(last_index_time_str)
     if last_time_stamp > 0:
         return _filter_file_by_mtime(folder, files, last_time_stamp)
     else:
         return files
+
+
+def _ext_is_supported(filename: str) -> bool:
+    return os.path.splitext(filename)[1].lower().strip(".") in SUPPORT_EXTS
+
+
+def _filename_is_blocked(filename: str) -> bool:
+    for skip in SKIP_LIST:
+        if skip in filename:
+            return True
+
+    return False
 
 
 def _filter_file_by_mtime(folder: str, files: list, last_time_stamp: float) -> list:
