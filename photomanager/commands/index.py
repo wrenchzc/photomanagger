@@ -39,7 +39,8 @@ class CommandIndex(Command):
             count += 1
             if count % 1000 == 0:
                 print(f"{count}/{total_count}")
-            if image_meta.filename not in all_file_list:
+
+            if image_meta.get_filename_with_folder() not in all_file_list:
                 self.db_session.delete(image_meta)
                 del_count += 1
                 print("delete recode for {}".format(image_meta.filename))

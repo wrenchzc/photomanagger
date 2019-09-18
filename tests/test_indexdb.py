@@ -49,11 +49,13 @@ def test_single_image(image_handler):
 
     assert len(image_metas) == 2
     assert image_metas[0].id == 1
-    assert image_metas[0].filename == u'tests/data/test1.jpg'
+    assert image_metas[0].folder == u'tests/data'
+    assert image_metas[0].filename == u'test1.jpg'
     assert image_metas[0].image_width == 1200
     assert image_metas[0].image_height == 1600
     assert image_metas[1].id == 2
-    assert image_metas[1].filename == u'tests/data/test4.jpg'
+    assert image_metas[1].folder == u'tests/data'
+    assert image_metas[1].filename == u'test4.jpg'
     assert image_metas[1].image_width == 1057
     assert image_metas[1].image_height == 1123
 
@@ -82,7 +84,8 @@ def test_image_modified(image_handler):
         image_metas = query.all()
         assert len(image_metas) == 2
         assert image_metas[0].id == 1
-        assert image_metas[0].filename == u'tests/data/test1.jpg'
+        assert image_metas[0].folder == u'tests/data'
+        assert image_metas[0].filename == u'test1.jpg'
         assert image_metas[0].image_width == 1200
         assert image_metas[0].image_height == 1600
     finally:

@@ -1,5 +1,7 @@
+import os
 from sqlalchemy import Column, String, INTEGER, DATETIME, FLOAT, Text
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import UniqueConstraint
 
 Base = declarative_base()
 
@@ -9,7 +11,8 @@ class ImageMeta(Base):
 
     id = Column(INTEGER, primary_key=True, autoincrement=True)
     uuid = Column(String(32))
-    filename = Column(String(256), unique=True)
+    folder = Column(String(255))
+    filename = Column(String(256))
     file_size = Column(INTEGER)
     md5 = Column(String(32), index=True)
     file_createtime = Column(DATETIME)
@@ -33,6 +36,17 @@ class ImageMeta(Base):
     country = Column(String(32))
     province = Column(String(32))
     city = Column(String(32))
+
+    __table_args__ = (UniqueConstraint('folder', 'filename', name='folder_filename'),)
+
+    def get_filename_with_folder(self):
+        if self.folder:
+            filename = "{folder}{sep}{basename}".format(folder=self.folder, sep=os.sep,
+                                                        basename=self.filename)
+        else:
+            filename = self.filename
+
+        return filename
 
 
 class Tag(Base):
