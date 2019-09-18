@@ -1,3 +1,5 @@
+import os
+from sqlalchemy import and_
 from photomanager.pmconst import TODO_INX_NAME
 from photomanager.imageutils import ImageInfo
 from photomanager.db.helper import exif_to_model
@@ -41,7 +43,10 @@ class ImageDBHandler:
         return cnt
 
     def index_image(self, filename):
-        image_meta_existed = self.session.query(ImageMeta).filter(ImageMeta.filename == filename).first()
+        folder = os.path.dirname(filename)
+        basename = os.path.basename(filename)
+        image_meta_existed = self.session.query(ImageMeta).filter(
+            and_(ImageMeta.filename == basename, ImageMeta.folder == folder)).first()
         full_file_name = self.folder + '/' + filename
 
         if image_meta_existed and (self.skip_existed or image_meta_existed.md5 == get_file_md5(full_file_name)):
@@ -49,7 +54,9 @@ class ImageDBHandler:
 
         image_info = ImageInfo(full_file_name)
         image_meta_new = exif_to_model(image_info)
-        image_meta_new.filename = filename
+
+        image_meta_new.filename = basename
+        image_meta_new.folder = folder
 
         if image_meta_existed:
             image_meta_new.id = image_meta_existed.id
