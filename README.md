@@ -9,7 +9,7 @@ a comand line photo manager
 3. 命令汗批量操作，如重命名，批量改大小等
 4. 人脸识别.
 5. 人脸聚类.
-6. 使用ProductAI自动打标签.
+6. 自动打标签.
 
 使用sqlite做数据库, 看看sqlite在几百万这个量级的性能如何
 

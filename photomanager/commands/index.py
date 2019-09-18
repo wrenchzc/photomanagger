@@ -6,6 +6,7 @@ from photomanager.helper import current_time_str
 from photomanager.db.imagehandler import ImageDBHandler
 from photomanager.db.models import ImageMeta
 
+
 class CommandIndex(Command):
     def __init__(self, folder, params):
         Command.__init__(self, folder, params)
