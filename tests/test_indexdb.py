@@ -62,7 +62,7 @@ def test_single_image(image_handler):
 
 def test_folder_files():
     files = get_folder_image_files('tests/data')
-    assert len(files) == 8
+    assert len(files) == 6
     assert "noexif.jpg" in files
     assert "subdir/dlrb.jpg" in files
 

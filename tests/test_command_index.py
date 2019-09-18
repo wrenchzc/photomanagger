@@ -22,12 +22,26 @@ def _clear():
     _remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
 
 
+def _copy_dup_files():
+    shutil.copy(f"{cmd_inx_test_root}/test4.jpg", f"{cmd_inx_test_root}/test4_dup.jpg")
+    shutil.copy(f"{cmd_inx_test_root}/test4.jpg", f"{cmd_inx_test_root}/subdir/test4_dup.jpg")
+
+
+def setup_module():
+    _copy_dup_files()
+
+
 def setup_function():
     _clear()
 
 
 def teardown_function():
     _clear()
+
+
+def teardown_module():
+    _remove_file(cmd_inx_test_root + '/' + "test4_dup.jpg")
+    _remove_file(cmd_inx_test_root + '/' + "subdir/test4_dup.jpg")
 
 
 def test_todolist_and_resume():

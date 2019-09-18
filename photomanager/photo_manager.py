@@ -31,10 +31,11 @@ def list(folder, tags, duplicate):
 
 
 @click.command()
-@click.option('--group_by', type=click.Choice(['hash', 'folder', 'filename']))
+#@click.option('--group_by', type=click.Choice(['hash', 'folder', 'filename']))
 @click.argument('folder', default="./")
-def remove_duplicate(folder, group_by):
-    command_remove_dup = CommandRemoveDuplicate(folder, {"group_by": group_by})
+def remove_dup(folder):
+    """ remove duplicate files"""
+    command_remove_dup = CommandRemoveDuplicate(folder, {})
     command_remove_dup.do()
 
 
@@ -63,4 +64,5 @@ if __name__ == "__main__":
     photo_manager_cli.add_command(tag)
     photo_manager_cli.add_command(config)
     photo_manager_cli.add_command(show)
+    photo_manager_cli.add_command(remove_dup)
     photo_manager_cli()

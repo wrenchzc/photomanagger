@@ -41,7 +41,7 @@ class ImageMeta(Base):
 
     def get_filename_with_folder(self):
         if self.folder:
-            filename = "{folder}{sep}{basename}".format(folder=self.folder, sep=os.sep,
+            filename = "{folder}{sep}{basename}".format(folder=self.folder, sep="/",
                                                         basename=self.filename)
         else:
             filename = self.filename
