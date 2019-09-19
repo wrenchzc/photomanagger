@@ -20,4 +20,4 @@ def do_convert(db_name):
 
 
 
-do_convert("/home/zhangchi/data/Photos/pmindex.db")
+do_convert("d:/Photos/pmindex.db")

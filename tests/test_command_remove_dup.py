@@ -49,4 +49,13 @@ class TestRemoveDup(object):
         db_session = get_db_session(cmd_inx_test_root + os.path.sep + PMDBNAME)
         executor = RemoveDupInOneFolderExecuter(cmd_inx_test_root, db_session, '')
         dup_files = executor.get_dupfile_list()
-        assert len(dup_files) == 2
+        keys = list(dup_files.keys())
+        assert len(keys) == 1
+        assert len(dup_files[keys[0]]) == 2
+        assert dup_files[keys[0]] == ["test4.jpg", "test4_dup.jpg"]
+
+        action_list = executor.generate_action_list(dup_files)
+        assert len(action_list) == 1
+        action = action_list[0]
+        assert action["action"] == "remove_file"
+        assert action["files"] == ["test4_dup.jpg"]
