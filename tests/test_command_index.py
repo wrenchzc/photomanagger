@@ -1,30 +1,25 @@
 import os
+import time
 import shutil
 from photomanager.commands.index import CommandIndex
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.db.models import ImageMeta
+from tests.utils import remove_file
 
 cmd_inx_test_root = 'tests/data'
 TEST_FILE_COUNT = 8
 
 
-def _remove_file(filename):
-    if os.path.exists(filename):
-        try:
-            os.remove(filename)
-        except PermissionError:
-            pass
-
-
 def _clear():
-    _remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
-    _remove_file(cmd_inx_test_root + '/' + PMDBNAME)
-    _remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
+    remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
+    remove_file(cmd_inx_test_root + '/' + PMDBNAME)
+    remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
 
 
 def _copy_dup_files():
     shutil.copy(f"{cmd_inx_test_root}/test4.jpg", f"{cmd_inx_test_root}/test4_dup.jpg")
     shutil.copy(f"{cmd_inx_test_root}/test4.jpg", f"{cmd_inx_test_root}/subdir/test4_dup.jpg")
+    time.sleep(0.5)
 
 
 def setup_module():
@@ -40,8 +35,8 @@ def teardown_function():
 
 
 def teardown_module():
-    _remove_file(cmd_inx_test_root + '/' + "test4_dup.jpg")
-    _remove_file(cmd_inx_test_root + '/' + "subdir/test4_dup.jpg")
+    remove_file(cmd_inx_test_root + '/' + "test4_dup.jpg")
+    remove_file(cmd_inx_test_root + '/' + "subdir/test4_dup.jpg")
 
 
 def test_todolist_and_resume():
