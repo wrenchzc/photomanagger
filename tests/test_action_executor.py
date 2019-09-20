@@ -1,3 +1,5 @@
+from photomanager.utils.action_executor import ActionExecutorList
+
 import shutil
 import time
 import os
@@ -5,12 +7,12 @@ from tests.utils import remove_file
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.commands.index import CommandIndex
 from photomanager.db.dbutils import get_db_session
-from photomanager.utils.remove_dup_doer import RemoveDupInOneFolderExecutor
+from photomanager.utils.action_executor import ActionRemoveFile
 
 cmd_inx_test_root = 'tests/data'
 
 
-class TestRemoveDup(object):
+class TestActionExecutor(object):
     db_session = None
 
     @staticmethod
@@ -31,6 +33,7 @@ class TestRemoveDup(object):
 
     @classmethod
     def setup_class(cls):
+        remove_file(cmd_inx_test_root + '/' + PMDBNAME)
         cls._copy_dup_files()
         cls._do_index()
 
@@ -45,18 +48,9 @@ class TestRemoveDup(object):
     def teardown_method(self):
         self._clear()
 
-    def test_remove_dup_one_folder(self):
+    def test_remove_action(self):
         db_session = get_db_session(cmd_inx_test_root + os.path.sep + PMDBNAME)
-        executor = RemoveDupInOneFolderExecutor(cmd_inx_test_root, db_session, '')
-        dup_files = executor.get_dupfile_list()
-        keys = list(dup_files.keys())
-        assert len(keys) == 1
-        dup_files_by_md5_1 = dup_files[keys[0]]
-        assert len(dup_files_by_md5_1) == 2
-        assert set(dup_files_by_md5_1).difference(set(["test4.jpg", "test4_dup.jpg"])) == set([])
-
-        action_list = executor.generate_action_list(dup_files)
-        assert len(action_list) == 1
-        action = action_list[0]
-        assert action["action"] == "remove_file"
-        assert action["files"] == [dup_files_by_md5_1[1]]
+        remove_action = dict(action="remove_file", files=["tset4_dup.jpg"])
+        remove_executor = ActionRemoveFile(cmd_inx_test_root, db_session, remove_action)
+        remove_executor.do()
+        assert(os.path.exists("tset4_dup.jpg"))

@@ -1,10 +1,11 @@
 from sqlalchemy import func, desc, and_
 from photomanager.db.models import ImageMeta
+from photomanager.errors import MultiFileError
 
 REMOVE_DUP_MODE_LIST = ["GENERATE_DELETE_LIST", "REAL_DELETE"]
 
 
-class RemoveDupExecuter(object):
+class RemoveDupExecutor(object):
 
     def __init__(self, base_folder: str, db_session):
         self.base_folder = base_folder
@@ -14,10 +15,10 @@ class RemoveDupExecuter(object):
         raise NotImplementedError
 
 
-class RemoveDupInOneFolderExecuter(RemoveDupExecuter):
+class RemoveDupInOneFolderExecutor(RemoveDupExecutor):
 
     def __init__(self, base_folder, db_session, relative_path: str):
-        RemoveDupExecuter.__init__(self, base_folder, db_session)
+        RemoveDupExecutor.__init__(self, base_folder, db_session)
         self.relative_path = relative_path
 
     def do(self):
