@@ -50,7 +50,12 @@ class TestActionExecutor(object):
 
     def test_remove_action(self):
         db_session = get_db_session(cmd_inx_test_root + os.path.sep + PMDBNAME)
-        remove_action = dict(action="remove_file", files=["tset4_dup.jpg"])
+        remove_action = dict(action="remove_file", files=["test4_dup.jpg"])
         remove_executor = ActionRemoveFile(cmd_inx_test_root, db_session, remove_action)
         remove_executor.do()
-        assert(os.path.exists("tset4_dup.jpg"))
+        assert (not os.path.exists("tset4_dup.jpg"))
+
+        remove_action = dict(action="remove_file", files=["subdir/test4_dup.jpg"])
+        remove_executor = ActionRemoveFile(cmd_inx_test_root, db_session, remove_action)
+        remove_executor.do()
+        assert (not os.path.exists("subdir/test4_dup.jpg"))

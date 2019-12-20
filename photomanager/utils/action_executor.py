@@ -29,7 +29,11 @@ class ActionRemoveFile(ActionExecutor):
         self._do_remove_file_from_db(relative_filename)
 
     def _do_remove_file_from_disk(self, relative_filename):
-        fullname = f"{self.base_folder}/{relative_filename}"
+        full_base_folder = self.base_folder
+        if not self.base_folder.startswith(os.sep):  # relative path:
+            full_base_folder = os.getcwd() + os.sep + self.base_folder
+
+        fullname = f"{full_base_folder}/{relative_filename}"
         if os.path.exists(fullname):
             os.remove(fullname)
 
@@ -39,10 +43,10 @@ class ActionRemoveFile(ActionExecutor):
         image_metas = self.db_session.query(ImageMeta).filter(
             and_(ImageMeta.folder == relative_dir, ImageMeta.filename == basename)).all()
 
-        if image_metas.record_count() > 1:
+        if len(image_metas) > 1:
             raise MultiFileError()
 
-        image_meta = image_metas.first()
+        image_meta = image_metas[0]
         self.db_session.delete(image_meta)
 
 class ActionExecutorList(object):
