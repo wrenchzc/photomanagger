@@ -4,14 +4,15 @@ import shutil
 from photomanager.commands.index import CommandIndex
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.db.models import ImageMeta
+from photomanager.db.dbutils import get_db_session, close_db_session
 from tests.utils import remove_file
 
 cmd_inx_test_root = 'tests/data'
 TEST_FILE_COUNT = 8
 
-
 def _clear():
     remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
+    close_db_session(cmd_inx_test_root + '/' + PMDBNAME)
     remove_file(cmd_inx_test_root + '/' + PMDBNAME)
     remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
 
@@ -92,3 +93,4 @@ def test_command_index():
     assert not os.path.exists(command_index.todo_file_name)
     assert command_index.handler.session.query(ImageMeta).count() == TEST_FILE_COUNT
     assert cnt[1] == 1
+

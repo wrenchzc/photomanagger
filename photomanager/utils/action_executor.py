@@ -2,6 +2,7 @@ import os
 from photomanager.db.models import ImageMeta
 from sqlalchemy import and_
 from photomanager.errors import MultiFileError
+from photomanager.pmconst import PATH_SEP
 
 
 class ActionExecutor(object):
@@ -30,8 +31,8 @@ class ActionRemoveFile(ActionExecutor):
 
     def _do_remove_file_from_disk(self, relative_filename):
         full_base_folder = self.base_folder
-        if not self.base_folder.startswith(os.sep):  # relative path:
-            full_base_folder = os.getcwd() + os.sep + self.base_folder
+        if not self.base_folder.startswith(PATH_SEP):  # relative path:
+            full_base_folder = os.getcwd() + PATH_SEP + self.base_folder
 
         fullname = f"{full_base_folder}/{relative_filename}"
         if os.path.exists(fullname):

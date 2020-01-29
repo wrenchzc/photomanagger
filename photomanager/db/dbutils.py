@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from photomanager.db.models import Base
 
+
 class IndexDBRaw:
     @staticmethod
     def __ensure_slahs(dir):
@@ -105,13 +106,26 @@ class IndexDBRaw:
         sql_init_values = "INSERT INTO tbl_options (name, value) values ('version', '1');"
 
         sql_version_1 = str(sql_init_tables + sql_init_index + sql_init_values).split(";")
-        self.execute_multi(sql_version_1 )
+        self.execute_multi(sql_version_1)
+
+
+_db_sessions = {}
 
 
 def get_db_session(full_db_name):
+    if full_db_name in _db_sessions:
+        return _db_sessions[full_db_name]
     full_db_name = os.path.expanduser(full_db_name)
     engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
     Base.metadata.create_all(engine)
     DB_Session = sessionmaker(bind=engine)
     session = DB_Session()
-    return session
+    _db_sessions[full_db_name] = session
+    return _db_sessions[full_db_name]
+
+
+def close_db_session(full_db_name):
+    if full_db_name in _db_sessions:
+        session = _db_sessions[full_db_name]
+        session.close()
+        _db_sessions.pop(full_db_name)

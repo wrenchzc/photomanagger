@@ -2,7 +2,7 @@ import shutil
 import time
 import os
 from tests.utils import remove_file
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
+from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex
 from photomanager.db.dbutils import get_db_session
 from photomanager.utils.remove_dup_doer import RemoveDupInOneFolderExecutor
@@ -46,7 +46,7 @@ class TestRemoveDup(object):
         self._clear()
 
     def test_remove_dup_one_folder(self):
-        db_session = get_db_session(cmd_inx_test_root + os.path.sep + PMDBNAME)
+        db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)
         executor = RemoveDupInOneFolderExecutor(cmd_inx_test_root, db_session, '')
         dup_files = executor.get_dupfile_list()
         keys = list(dup_files.keys())

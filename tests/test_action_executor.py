@@ -4,7 +4,7 @@ import shutil
 import time
 import os
 from tests.utils import remove_file
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
+from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex
 from photomanager.db.dbutils import get_db_session
 from photomanager.utils.action_executor import ActionRemoveFile
@@ -49,7 +49,7 @@ class TestActionExecutor(object):
         self._clear()
 
     def test_remove_action(self):
-        db_session = get_db_session(cmd_inx_test_root + os.path.sep + PMDBNAME)
+        db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)
         remove_action = dict(action="remove_file", files=["test4_dup.jpg"])
         remove_executor = ActionRemoveFile(cmd_inx_test_root, db_session, remove_action)
         remove_executor.do()

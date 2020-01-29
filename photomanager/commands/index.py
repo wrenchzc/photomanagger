@@ -1,5 +1,5 @@
 import os
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
+from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.base import Command
 from photomanager.imageutils import get_folder_image_files
 from photomanager.helper import current_time_str
@@ -16,7 +16,7 @@ class CommandIndex(Command):
         self.clean = params.get("clean", False)
         self.handler = ImageDBHandler(folder, self.db_session, skip_existed=self.skip_existed)
 
-        self.todo_file_name = os.path.expanduser("{folder}{sep}{list_file}".format(folder=self.folder, sep=os.path.sep,
+        self.todo_file_name = os.path.expanduser("{folder}{sep}{list_file}".format(folder=self.folder, sep=PATH_SEP,
                                                                                    list_file=PM_TODO_LIST))
         self.fp_index = None
         self.handler.on_index_image = self.on_index_image
