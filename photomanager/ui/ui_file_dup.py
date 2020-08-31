@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.setEnabled(True)
-        Dialog.resize(1021, 850)
-        self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
+class Ui_DlgFileDup(object):
+    def setupUi(self, DlgFileDup):
+        DlgFileDup.setObjectName("DlgFileDup")
+        DlgFileDup.setEnabled(True)
+        DlgFileDup.resize(1021, 850)
+        self.verticalLayoutWidget = QtWidgets.QWidget(DlgFileDup)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 641, 791))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
@@ -24,35 +24,35 @@ class Ui_Dialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.lblImage = QtWidgets.QLabel(self.verticalLayoutWidget)
         self.lblImage.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.lblImage.setText("")
         self.lblImage.setObjectName("lblImage")
         self.verticalLayout.addWidget(self.lblImage)
-        self.verticalLayoutWidget_2 = QtWidgets.QWidget(Dialog)
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(DlgFileDup)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(640, 0, 381, 791))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.listWidget = QtWidgets.QListWidget(self.verticalLayoutWidget_2)
-        self.listWidget.setObjectName("listWidget")
-        self.verticalLayout_2.addWidget(self.listWidget)
-        self.btnCancel = QtWidgets.QDialogButtonBox(Dialog)
+        self.lstDupFiles = QtWidgets.QListWidget(self.verticalLayoutWidget_2)
+        self.lstDupFiles.setObjectName("lstDupFiles")
+        self.verticalLayout_2.addWidget(self.lstDupFiles)
+        self.btnCancel = QtWidgets.QDialogButtonBox(DlgFileDup)
         self.btnCancel.setGeometry(QtCore.QRect(935, 820, 81, 23))
         self.btnCancel.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel)
         self.btnCancel.setCenterButtons(False)
         self.btnCancel.setObjectName("btnCancel")
-        self.btnPrev = QtWidgets.QPushButton(Dialog)
+        self.btnPrev = QtWidgets.QPushButton(DlgFileDup)
         self.btnPrev.setGeometry(QtCore.QRect(10, 810, 75, 23))
         self.btnPrev.setObjectName("btnPrev")
-        self.btnNext = QtWidgets.QPushButton(Dialog)
+        self.btnNext = QtWidgets.QPushButton(DlgFileDup)
         self.btnNext.setGeometry(QtCore.QRect(110, 810, 75, 23))
         self.btnNext.setObjectName("btnNext")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(DlgFileDup)
+        QtCore.QMetaObject.connectSlotsByName(DlgFileDup)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, DlgFileDup):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.lblImage.setText(_translate("Dialog", "TextLabel"))
-        self.btnPrev.setText(_translate("Dialog", "Previous"))
-        self.btnNext.setText(_translate("Dialog", "Next"))
+        DlgFileDup.setWindowTitle(_translate("DlgFileDup", "Dialog"))
+        self.btnPrev.setText(_translate("DlgFileDup", "Previous"))
+        self.btnNext.setText(_translate("DlgFileDup", "Next"))

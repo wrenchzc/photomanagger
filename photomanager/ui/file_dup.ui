@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>DlgFileDup</class>
+ <widget class="QDialog" name="DlgFileDup">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -35,7 +35,7 @@
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -52,7 +52,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QListWidget" name="listWidget"/>
+     <widget class="QListWidget" name="lstDupFiles"/>
     </item>
    </layout>
   </widget>

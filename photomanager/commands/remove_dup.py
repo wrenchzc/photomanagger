@@ -4,6 +4,8 @@ from photomanager.commands.base import Command
 from sqlalchemy import func, desc
 from photomanager.db.models import ImageMeta
 from photomanager.utils.logger import logger
+from photomanager.ui import qt_app
+from photomanager.ui.window_file_dup import WindowClearDup
 
 
 class CommandRemoveDuplicate(Command):
@@ -12,11 +14,15 @@ class CommandRemoveDuplicate(Command):
 
     def do(self):
         dups = self._list_duplicate()
-        for md5 in dups.keys():
-            self._do_clean(dups[md5])
+        self._do_clean(dups)
+        #for md5 in dups.keys():
+        #    self._do_clean(dups[md5])
 
-    def _do_clean(self, dup_files_by_folder):
-        pass
+    def _do_clean(self, dup_files_by_md5):
+        w_file_dup = WindowClearDup(dup_files_by_md5)
+        w_file_dup.show()
+        qt_app.exec_()
+
 
     def _list_duplicate(self) -> dict:
         dup_md5s = self.db_session.query(func.count(ImageMeta.md5), ImageMeta.md5).group_by(ImageMeta.md5).having(
