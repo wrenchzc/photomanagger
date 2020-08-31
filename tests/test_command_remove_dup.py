@@ -3,7 +3,8 @@ import time
 import os
 from tests.utils import remove_file
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
-from photomanager.commands.index import CommandIndex
+from photomanager.commands.index import CommandIndex 
+from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.db.dbutils import get_db_session
 from photomanager.utils.remove_dup_doer import RemoveDupInOneFolderExecutor
 
@@ -45,7 +46,7 @@ class TestRemoveDup(object):
     def teardown_method(self):
         self._clear()
 
-    def test_remove_dup_one_folder(self):
+    def test_remove_dup_one_folder_executor(self):
         db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)
         executor = RemoveDupInOneFolderExecutor(cmd_inx_test_root, db_session, '')
         dup_files = executor.get_dupfile_list()
@@ -60,3 +61,11 @@ class TestRemoveDup(object):
         action = action_list[0]
         assert action["action"] == "remove_file"
         assert action["files"] == [dup_files_by_md5_1[1]]
+
+    def test_list_dup(self):
+        cmd_dup = CommandRemoveDuplicate(cmd_inx_test_root, {})
+        dup_list = cmd_dup._list_duplicate()
+        expect_data = {
+         '4a298b2c1e0b9d02550d8f3a32b5b2d3':  [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
+        }
+        assert(dup_list == expect_data)
