@@ -52,8 +52,10 @@ class WindowClearDup(QDialog, Ui_DlgFileDup):
             self.__init_by_dup_files__()
     
     def lstDupFiles_itemSelectChanged(self):
-        self.btnDelete.setEnabled(len(self.lstDupFiles.selectedItems()) > 0)
+        selected_count = len(self.lstDupFiles.selectedItems())
+        self.btnDelete.setEnabled(selected_count > 0)
+        if selected_count > 0:
+            current_index = self.lstDupFiles.currentRow()
+            if current_index >= 0:
+                self.__init_by_dup_files__(current_index)
 
-    def lstDupFile_itemActivated(self, list_item: QListWidgetItem):
-        select_index = self.lstDupFiles.currentRow()
-        self.__init_by_dup_files__(select_index)
