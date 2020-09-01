@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QListWidgetItem
 from PyQt5.QtGui import QImage, QPixmap
 from photomanager.ui.ui_file_dup import Ui_DlgFileDup
 from photomanager.pmconst import PATH_SEP
@@ -25,14 +25,14 @@ class WindowClearDup(QDialog, Ui_DlgFileDup):
         self.lblImage.setScaledContents(True)
         self.btnDelete.setEnabled(False)
 
-    def __init_by_dup_files__(self):
+    def __init_by_dup_files__(self, selected_index = 0):
         self.lstDupFiles.clear()
         self.active_key = self.dup_keys[self.active_index]
         self.active_files = self.dup_files_by_md5[self.active_key]
 
         for item in self.active_files:
             self.lstDupFiles.addItem(item[0] + PATH_SEP + item[1])
-        first_folder, first_name = self.active_files[0]
+        first_folder, first_name = self.active_files[selected_index]
         first_full_name = self.folder + PATH_SEP + first_folder + PATH_SEP + first_name
         disp_img = QImage(first_full_name)
         disp_img.load(first_full_name)
@@ -54,3 +54,6 @@ class WindowClearDup(QDialog, Ui_DlgFileDup):
     def lstDupFiles_itemSelectChanged(self):
         self.btnDelete.setEnabled(len(self.lstDupFiles.selectedItems()) > 0)
 
+    def lstDupFile_itemActivated(self, list_item: QListWidgetItem):
+        select_index = self.lstDupFiles.currentRow()
+        self.__init_by_dup_files__(select_index)

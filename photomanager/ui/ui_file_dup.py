@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui\file_dup.ui'
+# Form implementation generated from reading ui file 'ui/file_dup.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.0
 #
@@ -56,6 +56,7 @@ class Ui_DlgFileDup(object):
         self.btnNext.clicked.connect(DlgFileDup.btnNext_click)
         self.btnPrev.clicked.connect(DlgFileDup.btnPrev_click)
         self.lstDupFiles.itemSelectionChanged.connect(DlgFileDup.lstDupFiles_itemSelectChanged)
+        self.lstDupFiles.itemActivated['QListWidgetItem*'].connect(DlgFileDup.lstDupFile_itemActivated)
         QtCore.QMetaObject.connectSlotsByName(DlgFileDup)
 
     def retranslateUi(self, DlgFileDup):

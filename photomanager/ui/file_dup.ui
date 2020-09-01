@@ -166,10 +166,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lstDupFiles</sender>
+   <signal>itemActivated(QListWidgetItem*)</signal>
+   <receiver>DlgFileDup</receiver>
+   <slot>lstDupFile_itemActivated(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>707</x>
+     <y>691</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>640</x>
+     <y>833</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>btnNext_click()</slot>
   <slot>btnPrev_click()</slot>
   <slot>lstDupFiles_itemSelectChanged()</slot>
+  <slot>lstDupFile_itemActivated(QListWidgetItem*)</slot>
  </slots>
 </ui>

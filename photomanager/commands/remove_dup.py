@@ -4,7 +4,7 @@ from photomanager.commands.base import Command
 from sqlalchemy import func, desc
 from photomanager.db.models import ImageMeta
 from photomanager.utils.logger import logger
-from photomanager.ui import qt_app
+from photomanager.ui.qt_app import qt_app
 from photomanager.ui.window_file_dup import WindowClearDup
 
 
