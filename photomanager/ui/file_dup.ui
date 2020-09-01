@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>1021</width>
-    <height>850</height>
+    <height>854</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Remove Duplicate</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -52,16 +52,20 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QListWidget" name="lstDupFiles"/>
+     <widget class="QListWidget" name="lstDupFiles">
+      <property name="selectionMode">
+       <enum>QAbstractItemView::MultiSelection</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
   <widget class="QDialogButtonBox" name="btnCancel">
    <property name="geometry">
     <rect>
-     <x>935</x>
-     <y>820</y>
-     <width>81</width>
+     <x>920</x>
+     <y>810</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -98,7 +102,74 @@
     <string>Next</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnDelete">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>810</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnNext</sender>
+   <signal>clicked()</signal>
+   <receiver>DlgFileDup</receiver>
+   <slot>btnNext_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>819</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>820</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnPrev</sender>
+   <signal>clicked()</signal>
+   <receiver>DlgFileDup</receiver>
+   <slot>btnPrev_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>821</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>473</x>
+     <y>835</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lstDupFiles</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>DlgFileDup</receiver>
+   <slot>lstDupFiles_itemSelectChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>508</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>843</x>
+     <y>829</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>btnNext_click()</slot>
+  <slot>btnPrev_click()</slot>
+  <slot>lstDupFiles_itemSelectChanged()</slot>
+ </slots>
 </ui>

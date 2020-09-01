@@ -19,7 +19,7 @@ class CommandRemoveDuplicate(Command):
         #    self._do_clean(dups[md5])
 
     def _do_clean(self, dup_files_by_md5):
-        w_file_dup = WindowClearDup(dup_files_by_md5)
+        w_file_dup = WindowClearDup(self.folder, dup_files_by_md5)
         w_file_dup.show()
         qt_app.exec_()
 
