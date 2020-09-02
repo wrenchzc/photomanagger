@@ -4,7 +4,7 @@ import pytest
 from photomanager.db.dbutils import IndexDBRaw, get_db_session
 from photomanager.db.models import ImageMeta
 from photomanager.db.imagehandler import ImageDBHandler
-from photomanager.imageutils import get_folder_image_files
+from photomanager.utils.imageutils import get_folder_image_files
 from photomanager.pmconst import PMDBNAME
 
 

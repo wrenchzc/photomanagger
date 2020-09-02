@@ -50,6 +50,7 @@ class ActionRemoveFile(ActionExecutor):
         image_meta = image_metas[0]
         self.db_session.delete(image_meta)
 
+
 class ActionExecutorList(object):
 
     def __init__(self, base_folder: str, db_session, actions: list):
@@ -75,6 +76,6 @@ class ActionExecutorList(object):
 
     def _create_executor(self, action_item) -> ActionExecutor:
         if action_item["action"] == "remove_file":
-            return ActionExecutor(action_item)
+            return ActionRemoveFile(self.base_folder, self.db_session, action_item)
         else:
             raise NotImplementedError("unsupported error")

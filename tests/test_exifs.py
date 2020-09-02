@@ -1,4 +1,4 @@
-from photomanager.imageutils import TagInfo, FileInfo
+from photomanager.utils.imageutils import TagInfo, FileInfo
 
 
 def test_jpg_tags():

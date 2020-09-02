@@ -1,7 +1,7 @@
 import datetime
 import time
 from photomanager.db.models import ImageMeta
-from photomanager.imageutils import ImageInfo
+from photomanager.utils.imageutils import ImageInfo
 
 
 def fraction_to_float(fraction):
@@ -35,7 +35,7 @@ def exif_to_model(image_info):
 
     tags = image_info.tags
 
-    from photomanager.imageutils import TagInfo
+    from photomanager.utils.imageutils import TagInfo
     assert isinstance(tags, TagInfo)
     image_meta.image_width = tags.image_width
     image_meta.image_height = tags.image_height
