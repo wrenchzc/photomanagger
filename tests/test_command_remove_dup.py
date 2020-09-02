@@ -1,12 +1,16 @@
 import shutil
 import time
 import os
+import pytest
 from tests.utils import remove_file
+from sqlalchemy import and_
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex 
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.db.dbutils import get_db_session
-from photomanager.utils.remove_dup_doer import RemoveDupInOneFolderExecutor
+from photomanager.utils.remove_dup_doer import RemoveDupFilesController
+from photomanager import errors
+from photomanager.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'
 
@@ -46,22 +50,6 @@ class TestRemoveDup(object):
     def teardown_method(self):
         self._clear()
 
-    def test_remove_dup_one_folder_executor(self):
-        db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)
-        executor = RemoveDupInOneFolderExecutor(cmd_inx_test_root, db_session, '')
-        dup_files = executor.get_dupfile_list()
-        keys = list(dup_files.keys())
-        assert len(keys) == 1
-        dup_files_by_md5_1 = dup_files[keys[0]]
-        assert len(dup_files_by_md5_1) == 2
-        assert set(dup_files_by_md5_1).difference(set(["test4.jpg", "test4_dup.jpg"])) == set([])
-
-        action_list = executor.generate_action_list(dup_files)
-        assert len(action_list) == 1
-        action = action_list[0]
-        assert action["action"] == "remove_file"
-        assert action["files"] == [dup_files_by_md5_1[1]]
-
     def test_list_dup(self):
         cmd_dup = CommandRemoveDuplicate(cmd_inx_test_root, {})
         dup_list = cmd_dup._list_duplicate()
@@ -69,3 +57,31 @@ class TestRemoveDup(object):
          '4a298b2c1e0b9d02550d8f3a32b5b2d3':  [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
         }
         assert(dup_list == expect_data)
+
+
+    def test_remove_dups_error(self):
+        dup_files = [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
+        db_session = get_db_session(cmd_inx_test_root + '/' + PMDBNAME)
+        remove_dup_ctr = RemoveDupFilesController(cmd_inx_test_root, db_session, dup_files)
+        with pytest.raises(errors.RemoveImageIndexOutofRangeError) as exc_info:
+            remove_dup_ctr.delete([-1])
+        assert exc_info.value.error_code == 40001
+        with pytest.raises(errors.RemoveImageCannotRemoveAllError) as exc_info:
+            remove_dup_ctr.delete([0, 1, 2])
+        assert exc_info.value.error_code == 40002
+
+
+    def test_remove_dups(self):
+        dup_files = [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
+        db_session = get_db_session(cmd_inx_test_root + '/' + PMDBNAME)
+        remove_dup_ctr = RemoveDupFilesController(cmd_inx_test_root, db_session, dup_files)
+        cnt = remove_dup_ctr.delete([1,2])
+        assert(cnt == 2)
+        assert (not os.path.exists(cmd_inx_test_root +  "/subdir/test4_dup.jpg"))
+        assert (not os.path.exists(cmd_inx_test_root + "/test4_dup.jpg"))
+        assert (os.path.exists(cmd_inx_test_root + "/test4.jpg"))
+        imgs = db_session.query(ImageMeta).filter(
+            and_(ImageMeta.folder == "subdir", ImageMeta.filename == "tset4_dup.jpg")).all()
+        assert len(imgs) == 0
+
+

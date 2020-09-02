@@ -86,6 +86,8 @@ def test_command_index():
     assert command_index.handler.session.query(ImageMeta).count() == TEST_FILE_COUNT + 1
     assert cnt[0] == 1
 
+    import time
+    time.sleep(1)
     os.remove(cmd_inx_test_root + "/test_new.jpg")
     command_index = CommandIndex(cmd_inx_test_root, {"clean": True})
     cnt = command_index.do()
