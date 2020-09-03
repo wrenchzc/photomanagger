@@ -8,7 +8,7 @@ from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex 
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.db.dbutils import get_db_session
-from photomanager.utils.remove_dup_doer import RemoveDupFilesController
+from photomanager.utils.remove_dup_controller import RemoveDupFilesDoer
 from photomanager import errors
 from photomanager.db.models import ImageMeta
 
@@ -62,7 +62,7 @@ class TestRemoveDup(object):
     def test_remove_dups_error(self):
         dup_files = [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
         db_session = get_db_session(cmd_inx_test_root + '/' + PMDBNAME)
-        remove_dup_ctr = RemoveDupFilesController(cmd_inx_test_root, db_session, dup_files)
+        remove_dup_ctr = RemoveDupFilesDoer(cmd_inx_test_root, db_session, dup_files)
         with pytest.raises(errors.RemoveImageIndexOutofRangeError) as exc_info:
             remove_dup_ctr.delete([-1])
         assert exc_info.value.error_code == 40001
@@ -74,7 +74,7 @@ class TestRemoveDup(object):
     def test_remove_dups(self):
         dup_files = [('', 'test4.jpg'), ('', 'test4_dup.jpg'), ('subdir', 'test4_dup.jpg')]
         db_session = get_db_session(cmd_inx_test_root + '/' + PMDBNAME)
-        remove_dup_ctr = RemoveDupFilesController(cmd_inx_test_root, db_session, dup_files)
+        remove_dup_ctr = RemoveDupFilesDoer(cmd_inx_test_root, db_session, dup_files)
         cnt = remove_dup_ctr.delete([1,2])
         assert(cnt == 2)
         assert (not os.path.exists(cmd_inx_test_root +  "/subdir/test4_dup.jpg"))

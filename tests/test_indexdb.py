@@ -61,6 +61,8 @@ def test_single_image(image_handler):
 
 
 def test_folder_files():
+    shutil.copy(f"tests/data/test4.jpg", f"tests/data/test4_dup.jpg")
+    shutil.copy(f"tests/data/test4.jpg", f"tests/data/subdir/test4_dup.jpg")
     files = get_folder_image_files('tests/data')
     assert len(files) == 8
     assert "noexif.jpg" in files
