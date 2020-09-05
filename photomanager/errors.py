@@ -2,7 +2,6 @@ class PhotoManagerError(Exception):
     error_code = 0
     
 
-
 class MultiFileError(PhotoManagerError):
     error_code = 0
     message = "can not do action because of multi file shoted"

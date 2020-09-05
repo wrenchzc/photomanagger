@@ -8,7 +8,7 @@ from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex 
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.db.dbutils import get_db_session
-from photomanager.utils.remove_dup_controller import RemoveDupFilesDoer
+from photomanager.controller.controller_file_dup import RemoveDupFilesDoer
 from photomanager import errors
 from photomanager.db.models import ImageMeta
 
@@ -83,5 +83,6 @@ class TestRemoveDup(object):
         imgs = db_session.query(ImageMeta).filter(
             and_(ImageMeta.folder == "subdir", ImageMeta.filename == "tset4_dup.jpg")).all()
         assert len(imgs) == 0
+
 
 
