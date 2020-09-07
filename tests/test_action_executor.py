@@ -55,7 +55,7 @@ class TestActionExecutor(object):
     def teardown_method(self):
         self._clear()
         remove_file(cmd_inx_test_root + '/' + PMDBNAME)
-        time.sleep(0,5)
+        time.sleep(0.5)
 
     def test_remove_action(self):
         db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)

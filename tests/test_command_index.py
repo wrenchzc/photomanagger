@@ -24,6 +24,8 @@ def _copy_dup_files():
 
 
 def setup_module():
+    remove_file(cmd_inx_test_root + '/' + "test2_dup.jpg")
+    remove_file(cmd_inx_test_root + '/' + "test3_dup.jpg")
     _copy_dup_files()
 
 
@@ -38,6 +40,8 @@ def teardown_function():
 def teardown_module():
     remove_file(cmd_inx_test_root + '/' + "test4_dup.jpg")
     remove_file(cmd_inx_test_root + '/' + "subdir/test4_dup.jpg")
+    remove_file(cmd_inx_test_root + '/' + "test2_dup.jpg")
+    remove_file(cmd_inx_test_root + '/' + "test3_dup.jpg")
 
 
 def test_todolist_and_resume():

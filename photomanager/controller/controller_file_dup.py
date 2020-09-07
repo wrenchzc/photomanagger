@@ -92,24 +92,29 @@ class FileDupController(UIControllerBase):
     def current_dupfiles_count(self):
         return len(self.current_dup_files)
 
+    @property
+    def dup_list_count(self):
+        return len(self.dup_keys)
+
     def delete_current_dups_by_indexs(self, indexs: List[int]):
         if not self.dup_files_by_md5:
              raise errors.RemoveImageIndexOutofRangeError()
 
         old_active_index = self.active_index
-        old_dup_count = self.current_dupfiles_count
+        old_current_list_count = self.current_dupfiles_count
+        old_dup_list_count = self.dup_list_count
 
         remove_dup_doer = RemoveDupFilesDoer(self.base_folder, self.db_session, self.active_files)
         del_cnt = remove_dup_doer.delete(indexs)
 
-        if del_cnt == old_dup_count - 1:
+        if del_cnt == old_current_list_count - 1:
             self.dup_files_by_md5.pop(self.active_key)
             self.dup_keys = list(self.dup_files_by_md5)
 
-            if old_active_index == old_dup_count - 1:
+            if old_active_index == old_dup_list_count - 1:
                 self.active_index = len(self.dup_keys) - 1
             else:
-                self.active_index = old_dup_count
+                self.active_index = old_active_index
         else:
             self.active_index = old_active_index
 

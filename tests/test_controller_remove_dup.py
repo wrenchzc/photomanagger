@@ -128,4 +128,11 @@ class TestRemoveDupController(object):
         expect_list.pop(1)
         assert controller.current_dup_files == expect_list
 
+        controller.active_index = 1
+        controller.delete_current_dups_by_indexs([1])
+        assert len(controller.dup_keys) == 1
+        assert controller.active_index == 0
+        assert controller.active_key == keys[0]
+        assert controller.current_dup_files == expect_list
+
 
