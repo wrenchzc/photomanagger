@@ -6,12 +6,16 @@ from photomanager.db.models import ImageMeta
 from photomanager.db.imagehandler import ImageDBHandler
 from photomanager.utils.imageutils import get_folder_image_files
 from photomanager.pmconst import PMDBNAME
-
+from tests.utils import remove_tmp_files
 
 @pytest.fixture()
 def image_handler():
     session = get_db_session(PMDBNAME)
     return ImageDBHandler(".", session, False)
+
+
+def teardown_module():
+    remove_tmp_files("tests/data")
 
 
 def test_init_db():

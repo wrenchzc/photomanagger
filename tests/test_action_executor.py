@@ -4,7 +4,7 @@ import shutil
 import time
 import os
 from sqlalchemy import and_
-from tests.utils import remove_file
+from tests.utils import remove_file, remove_tmp_files
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex
 from photomanager.db.dbutils import get_db_session
@@ -19,8 +19,7 @@ class TestActionExecutor(object):
 
     @staticmethod
     def _clear():
-        remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
-        remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
+        remove_tmp_files(cmd_inx_test_root)
 
     @staticmethod
     def _copy_dup_files():
@@ -48,12 +47,14 @@ class TestActionExecutor(object):
 
     def setup_method(self):
         self._clear()
+        time.sleep(0.2)
         remove_file(cmd_inx_test_root + '/' + PMDBNAME)
         self._copy_dup_files()
         self._do_index()
 
     def teardown_method(self):
         self._clear()
+        time.sleep(0.2)
         remove_file(cmd_inx_test_root + '/' + PMDBNAME)
         time.sleep(0.5)
 

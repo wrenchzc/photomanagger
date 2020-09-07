@@ -5,16 +5,15 @@ from photomanager.commands.index import CommandIndex
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.db.models import ImageMeta
 from photomanager.db.dbutils import get_db_session, close_db_session
-from tests.utils import remove_file
+from tests.utils import remove_file, remove_tmp_files
 
 cmd_inx_test_root = 'tests/data'
-TEST_FILE_COUNT = 8
+TEST_FILE_COUNT = 6
 
 def _clear():
-    remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
     close_db_session(cmd_inx_test_root + '/' + PMDBNAME)
     remove_file(cmd_inx_test_root + '/' + PMDBNAME)
-    remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
+    remove_tmp_files(cmd_inx_test_root)
 
 
 def _copy_dup_files():
@@ -38,10 +37,7 @@ def teardown_function():
 
 
 def teardown_module():
-    remove_file(cmd_inx_test_root + '/' + "test4_dup.jpg")
-    remove_file(cmd_inx_test_root + '/' + "subdir/test4_dup.jpg")
-    remove_file(cmd_inx_test_root + '/' + "test2_dup.jpg")
-    remove_file(cmd_inx_test_root + '/' + "test3_dup.jpg")
+    _clear()
 
 
 def test_todolist_and_resume():

@@ -2,7 +2,7 @@ import shutil
 import time
 import os
 import pytest
-from tests.utils import remove_file
+from tests.utils import remove_tmp_files, remove_file
 from sqlalchemy import and_
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex
@@ -20,12 +20,7 @@ class TestRemoveDupController(object):
 
     @staticmethod
     def _clear():
-        remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
-        remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
-        remove_file(f"{cmd_inx_test_root}/test3_dup.jpg")
-        remove_file(f"{cmd_inx_test_root}/test2_dup.jpg")
-        remove_file(f"{cmd_inx_test_root}/test4_dup.jpg")
-        remove_file(f"{cmd_inx_test_root}/subdir/test4_dup.jpg")
+        remove_tmp_files(cmd_inx_test_root)
 
     @staticmethod
     def _copy_dup_files():
