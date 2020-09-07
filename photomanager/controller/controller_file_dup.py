@@ -5,6 +5,7 @@ from photomanager.controller.controller_base import UIControllerBase
 from photomanager.db.models import ImageMeta
 from photomanager.errors import RemoveImageIndexOutofRangeError, RemoveImageCannotRemoveAllError
 from photomanager.utils.action_executor import ActionRemoveFile
+from PyQt5.QtGui import QImage 
 
 class RemoveDupFilesDoer(object):
 
@@ -117,5 +118,11 @@ class FileDupController(UIControllerBase):
                 self.active_index = old_active_index
         else:
             self.active_index = old_active_index
+
+    def index_image(self, index: int):
+        first_full_name = self.base_folder + PATH_SEP + self.current_dup_files[index]
+        disp_img = QImage(first_full_name)
+        disp_img.load(first_full_name)
+        return disp_img
 
     
