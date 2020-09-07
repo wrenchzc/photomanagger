@@ -67,7 +67,7 @@ class TestRemoveDupController(object):
         expect_data = {
                 "4a298b2c1e0b9d02550d8f3a32b5b2d3": [("", "test4.jpg"), ("", "test4_dup.jpg"), ("subdir", "test4_dup.jpg")],
                 "91eaa1d0d7279b95f2f31b42d5daa57b": [("", "test3.jpg"), ("", "test3_dup.jpg")],
-                "f13741794005bc944d2b37f1db2a0775": [("", "test2.jpg"), ("", "test2_dup.jpg")],
+                "f30158c49bf44f43aea5819b308c4d69": [("", "test2.jpg"), ("", "test2_dup.jpg")],
                 }
         assert ui_data == expect_data
 
