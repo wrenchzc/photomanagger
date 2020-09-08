@@ -90,11 +90,11 @@ class FileDupController(UIControllerBase):
             self.active_index = self.active_index - 1
 
     @property
-    def current_dupfiles_count(self):
+    def current_dupfiles_count(self) -> int:
         return len(self.current_dup_files)
 
     @property
-    def dup_list_count(self):
+    def dup_group_count(self) -> int:
         return len(self.dup_keys)
 
     def delete_current_dups_by_indexs(self, indexs: List[int]):
@@ -103,7 +103,7 @@ class FileDupController(UIControllerBase):
 
         old_active_index = self.active_index
         old_current_list_count = self.current_dupfiles_count
-        old_dup_list_count = self.dup_list_count
+        old_dup_list_count = self.dup_group_count
 
         remove_dup_doer = RemoveDupFilesDoer(self.base_folder, self.db_session, self.active_files)
         del_cnt = remove_dup_doer.delete(indexs)

@@ -1,4 +1,5 @@
 import os
+import platform
 from photomanager.db.models import ImageMeta
 from sqlalchemy import and_
 from photomanager.errors import MultiFileError
@@ -31,7 +32,9 @@ class ActionRemoveFile(ActionExecutor):
 
     def _do_remove_file_from_disk(self, relative_filename):
         full_base_folder = self.base_folder
-        if not self.base_folder.startswith(PATH_SEP):  # relative path:
+        if platform.system() == "Linux" and not self.base_folder.startswith(PATH_SEP):  # relative path:
+            full_base_folder = os.getcwd() + PATH_SEP + self.base_folder
+        elif platform.system() == "Windows" and not self.base_folder[1] == ":":
             full_base_folder = os.getcwd() + PATH_SEP + self.base_folder
 
         fullname = f"{full_base_folder}/{relative_filename}"

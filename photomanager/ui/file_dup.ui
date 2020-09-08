@@ -166,6 +166,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>DlgFileDup</receiver>
+   <slot>btnDelete_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>735</x>
+     <y>823</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>608</x>
+     <y>819</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>btnNext_click()</slot>
@@ -174,5 +190,6 @@
   <slot>lstDupFile_itemActivated(QListWidgetItem*)</slot>
   <slot>lstDupFile_currentRowChanged(int)</slot>
   <slot>lstDupFile_clicked()</slot>
+  <slot>btnDelete_click()</slot>
  </slots>
 </ui>

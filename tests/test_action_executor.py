@@ -47,16 +47,15 @@ class TestActionExecutor(object):
 
     def setup_method(self):
         self._clear()
-        time.sleep(0.2)
+        time.sleep(0.5)
         remove_file(cmd_inx_test_root + '/' + PMDBNAME)
         self._copy_dup_files()
         self._do_index()
 
     def teardown_method(self):
         self._clear()
-        time.sleep(0.2)
-        remove_file(cmd_inx_test_root + '/' + PMDBNAME)
         time.sleep(0.5)
+        remove_file(cmd_inx_test_root + '/' + PMDBNAME)
 
     def test_remove_action(self):
         db_session = get_db_session(cmd_inx_test_root + PATH_SEP + PMDBNAME)
