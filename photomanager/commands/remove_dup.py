@@ -15,7 +15,7 @@ class CommandRemoveDuplicate(Command):
     def do(self):
         dups = self._list_duplicate()
         self._do_clean(dups)
-        #for md5 in dups.keys():
+        # for md5 in dups.keys():
         #    self._do_clean(dups[md5])
 
     def _do_clean(self, dup_files_by_md5):
@@ -23,10 +23,10 @@ class CommandRemoveDuplicate(Command):
         w_file_dup.show()
         qt_app.exec_()
 
-
     def _list_duplicate(self) -> dict:
-        dup_md5s = self.db_session.query(func.count(ImageMeta.md5), ImageMeta.md5).group_by(ImageMeta.md5).having(
-            func.count(ImageMeta.md5) > 1).order_by(desc(func.count(ImageMeta.md5))).all()
+        dup_md5s = self.db_session.query(func.count(ImageMeta.md5), ImageMeta.md5).filter(ImageMeta.file_size != 0). \
+            group_by(ImageMeta.md5).having(func.count(ImageMeta.md5) > 1).order_by(
+            desc(func.count(ImageMeta.md5))).all()
 
         dup_grpup_by_md5 = {}
 
@@ -36,4 +36,3 @@ class CommandRemoveDuplicate(Command):
             dup_grpup_by_md5[md5] = [(dup_file.folder, dup_file.filename) for dup_file in dup_files]
 
         return dup_grpup_by_md5
-
