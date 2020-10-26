@@ -3,8 +3,9 @@ from sqlalchemy import and_
 from photomanager.pmconst import TODO_INX_NAME
 from photomanager.imageutils import ImageInfo
 from photomanager.db.helper import exif_to_model
-from photomanager.db.models import Option, ImageMeta
+from photomanager.db.models import ImageMeta
 from photomanager.helper import get_file_md5
+from photomanager.db.config import Config
 
 
 class ImageDBHandler:
@@ -14,6 +15,7 @@ class ImageDBHandler:
         :param filenames: list of image filenames
         """
         self.session = session
+        self.config = Config(self.session)
         self.folder = folder
         self.skip_existed = skip_existed
         self._on_index_image = None
@@ -67,7 +69,7 @@ class ImageDBHandler:
 
     @property
     def todo_index(self):
-        value = self.get_option_value(TODO_INX_NAME)
+        value = self.config.get_value(TODO_INX_NAME)
         if value:
             return int(value)
         else:
@@ -76,20 +78,4 @@ class ImageDBHandler:
     @todo_index.setter
     def todo_index(self, value):
         assert isinstance(value, int)
-        self.set_option_value(TODO_INX_NAME, value)
-
-    def set_option_value(self, name: str, value):
-        option = self.session.query(Option).filter(Option.name == name).first()
-
-        if not option:
-            option = Option()
-            option.name = name
-
-        option.value = str(value)
-        self.session.add(option)
-        self.session.commit()
-
-    def get_option_value(self, name) -> str:
-        option_todo_inx = self.session.query(Option).filter(Option.name == name).first()
-        if option_todo_inx:
-            return option_todo_inx.value
+        self.config.set_value(TODO_INX_NAME, value)

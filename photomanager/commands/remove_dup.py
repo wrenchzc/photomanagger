@@ -3,7 +3,6 @@ import os
 from photomanager.commands.base import Command
 from sqlalchemy import func, desc
 from photomanager.db.models import ImageMeta
-from photomanager.utils.logger import logger
 from photomanager.ui.qt_app import qt_app
 from photomanager.ui.window_file_dup import WindowClearDup
 
@@ -37,3 +36,21 @@ class CommandRemoveDuplicate(Command):
 
         return dup_grpup_by_md5
 
+    def _get_dup_files_group_by_folder(self, dup_files: list) -> dict:
+        """
+        :param dup_files: list of files
+        :return: dict
+        sample:
+            {"folder1", "aaa.jpg", "bbb.jpg",
+             "folder2", "aaa.jpg"
+            }
+
+        """
+        dup_files_by_folder = {}
+        for dup_file in dup_files:
+            file_name = os.path.basename(dup_file)
+            foldler_name = os.path.dirname(dup_file)
+            if foldler_name not in dup_files_by_folder:
+                dup_files_by_folder[foldler_name] = []
+            dup_files_by_folder[foldler_name].append(file_name)
+        return dup_files_by_folder

@@ -41,10 +41,12 @@ def exif_to_model(image_info):
     image_meta.image_height = tags.image_height
     if tags.has_exif:
         try:
-            image_meta.origin_datetime = datetime.datetime.strptime(tags.origin_datetime,
-                                                                    '%Y:%m:%d %H:%M:%S') if tags.origin_datetime else None
-            image_meta.digit_datetime = datetime.datetime.strptime(tags.digital_datetime,
-                                                                   '%Y:%m:%d %H:%M:%S') if tags.digital_datetime else None
+            image_meta.origin_datetime = \
+                datetime.datetime.strptime(tags.origin_datetime,
+                                           '%Y:%m:%d %H:%M:%S') if tags.origin_datetime else None
+            image_meta.digit_datetime = \
+                datetime.datetime.strptime(tags.digital_datetime,
+                                           '%Y:%m:%d %H:%M:%S') if tags.digital_datetime else None
             image_meta.camera_brand = tags.camera_brand
             image_meta.camera_type = tags.camera_type
             image_meta.focal_length = fraction_to_float(tags.focal_length)
