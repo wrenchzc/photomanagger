@@ -1,6 +1,5 @@
 import shutil
 import time
-import os
 from tests.utils import remove_file
 from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex

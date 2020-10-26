@@ -31,7 +31,6 @@ def list(folder, tags, duplicate):
 
 
 @click.command()
-#@click.option('--group_by', type=click.Choice(['hash', 'folder', 'filename']))
 @click.argument('folder', default="./")
 def remove_dup(folder):
     """ remove duplicate files"""
@@ -40,6 +39,7 @@ def remove_dup(folder):
 
 
 @click.command()
+@click.option('--backup_dir', default="../photomanager_backup", help="backup folder when delete photo by commands")
 def config():
     """ set or list the configuration """
     pass

@@ -1,8 +1,9 @@
 import sqlite3
 import os
+import typing
 from photomanager.pmconst import PMDBNAME
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 from photomanager.db.models import Base
 
@@ -109,11 +110,11 @@ class IndexDBRaw:
         self.execute_multi(sql_version_1)
 
 
-_db_sessions = {}
+_db_sessions: typing.Dict[str, Session] = {}
 
 
 def get_db_session(full_db_name):
-    if full_db_name in _db_sessions:
+    if full_db_name in _db_sessions and _db_sessions[full_db_name].is_active:
         return _db_sessions[full_db_name]
     full_db_name = os.path.expanduser(full_db_name)
     engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))

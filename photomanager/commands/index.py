@@ -61,7 +61,7 @@ class CommandIndex(Command):
         if self.force:
             last_index_time_str = 0
         else:
-            last_index_time_str = self.handler.get_option_value("INDEX_END_TIME")
+            last_index_time_str = self.config.get_value("INDEX_END_TIME")
 
         self.file_list = get_folder_image_files(self.folder, last_index_time_str)
         with open(self.todo_file_name, "w", encoding='utf-8') as fp_todo:
@@ -79,10 +79,10 @@ class CommandIndex(Command):
             self._resume_file_list()
 
     def index(self):
-        self.handler.set_option_value("INDEX_BEGIN_TIME", current_time_str())
-        self.handler.set_option_value("INDEX_END_TIME", None)
+        self.config.set_value("INDEX_BEGIN_TIME", current_time_str())
+        self.config.set_value("INDEX_END_TIME", None)
         cnt = self.handler.do_index(self.file_list[self.todo_inx:])
-        self.handler.set_option_value("INDEX_END_TIME", current_time_str())
+        self.config.set_value("INDEX_END_TIME", current_time_str())
         os.remove(self.todo_file_name)
         self.handler.todo_index = -1
         return cnt
