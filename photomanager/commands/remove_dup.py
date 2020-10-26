@@ -3,7 +3,6 @@ import os
 from photomanager.commands.base import Command
 from sqlalchemy import func, desc
 from photomanager.db.models import ImageMeta
-from photomanager.utils.logger import logger
 
 
 class CommandRemoveDuplicate(Command):
@@ -50,4 +49,3 @@ class CommandRemoveDuplicate(Command):
                 dup_files_by_folder[foldler_name] = []
             dup_files_by_folder[foldler_name].append(file_name)
         return dup_files_by_folder
-

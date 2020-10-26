@@ -1,6 +1,5 @@
 from sqlalchemy import func, desc, and_
 from photomanager.db.models import ImageMeta
-from photomanager.errors import MultiFileError
 
 REMOVE_DUP_MODE_LIST = ["GENERATE_DELETE_LIST", "REAL_DELETE"]
 
@@ -59,9 +58,8 @@ class RemoveDupInOneFolderExecutor(RemoveDupExecutor):
             dup_files = dup_files_by_md5[md5]
             to_remove_files.extend(dup_files[1:])
 
-        action_item = dict(action="remove_file",  files = to_remove_files)
+        action_item = dict(action="remove_file", files=to_remove_files)
         return [action_item]
-
 
     def __get_action_mode(self):
         return "GENERATE_DELETE_LIST"

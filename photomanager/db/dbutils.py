@@ -4,7 +4,6 @@ import typing
 from photomanager.pmconst import PMDBNAME
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.declarative import declarative_base
 from photomanager.db.models import Base
 
 

@@ -22,4 +22,3 @@ class Config(object):
         opt = self.session.query(Option).filter(Option.name == name).first()
         if opt:
             return opt.value
-

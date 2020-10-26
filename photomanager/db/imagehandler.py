@@ -79,4 +79,3 @@ class ImageDBHandler:
     def todo_index(self, value):
         assert isinstance(value, int)
         self.config.set_value(TODO_INX_NAME, value)
-

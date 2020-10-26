@@ -1,5 +1,5 @@
 import os
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
+from photomanager.pmconst import PM_TODO_LIST, PATH_SEP
 from photomanager.commands.base import Command
 from photomanager.imageutils import get_folder_image_files
 from photomanager.helper import current_time_str

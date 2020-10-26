@@ -1,4 +1,3 @@
-import os
 from sqlalchemy import Column, String, INTEGER, DATETIME, FLOAT, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import UniqueConstraint
@@ -64,6 +63,7 @@ class Option(Base):
     id = Column(INTEGER, primary_key=True, autoincrement=True)
     name = Column(String(32), unique=True)
     value = Column(String(32))
+
 
 class Person(Base):
     __tablename__ = "tbl_person"

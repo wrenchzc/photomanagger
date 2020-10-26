@@ -1,4 +1,3 @@
-import os
 from sqlalchemy import func, desc
 from photomanager.commands.base import Command
 from photomanager.db.models import ImageMeta
@@ -22,4 +21,4 @@ class CommandList(Command):
             dup_files = self.handler.session.query(ImageMeta.filename).filter(ImageMeta.md5 == md5).all()
             print("{cnt} items have same md5 {md5}".format(cnt=len(dup_files), md5=md5))
             for dup_file in dup_files:
-                print (dup_file.filename)
+                print(dup_file.filename)

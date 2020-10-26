@@ -50,6 +50,7 @@ class ActionRemoveFile(ActionExecutor):
         image_meta = image_metas[0]
         self.db_session.delete(image_meta)
 
+
 class ActionExecutorList(object):
 
     def __init__(self, base_folder: str, db_session, actions: list):
