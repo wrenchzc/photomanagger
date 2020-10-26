@@ -6,7 +6,7 @@ from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
 from photomanager.db.dbutils import IndexDBRaw, get_db_session, close_db_session
 from photomanager.db.models import ImageMeta
 from photomanager.db.imagehandler import ImageDBHandler
-from photomanager.imageutils import get_folder_image_files
+from photomanager.utils.imageutils import get_folder_image_files
 from photomanager.pmconst import PMDBNAME
 from photomanager.db.config import Config
 from tests.utils import remove_file
@@ -65,7 +65,7 @@ class TestIndexDB(object):
 
     def test_folder_files(self):
         files = get_folder_image_files('tests/data')
-        assert len(files) == 8
+        assert len(files) == 6
         assert "noexif.jpg" in files
         assert "subdir/dlrb.jpg" in files
 

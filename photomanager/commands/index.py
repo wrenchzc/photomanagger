@@ -1,7 +1,7 @@
 import os
 from photomanager.pmconst import PM_TODO_LIST, PATH_SEP
 from photomanager.commands.base import Command
-from photomanager.imageutils import get_folder_image_files
+from photomanager.utils.imageutils import get_folder_image_files
 from photomanager.helper import current_time_str
 from photomanager.db.imagehandler import ImageDBHandler
 from photomanager.db.models import ImageMeta

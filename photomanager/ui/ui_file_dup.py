@@ -56,6 +56,7 @@ class Ui_DlgFileDup(object):
         self.btnNext.clicked.connect(DlgFileDup.btnNext_click)
         self.btnPrev.clicked.connect(DlgFileDup.btnPrev_click)
         self.lstDupFiles.itemSelectionChanged.connect(DlgFileDup.lstDupFiles_itemSelectChanged)
+        self.btnDelete.clicked.connect(DlgFileDup.btnDelete_click)
         QtCore.QMetaObject.connectSlotsByName(DlgFileDup)
 
     def retranslateUi(self, DlgFileDup):

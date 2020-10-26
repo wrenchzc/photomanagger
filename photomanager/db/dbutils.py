@@ -113,8 +113,11 @@ _db_sessions: typing.Dict[str, Session] = {}
 
 
 def get_db_session(full_db_name):
-    if full_db_name in _db_sessions and _db_sessions[full_db_name].is_active:
-        return _db_sessions[full_db_name]
+    if full_db_name in _db_sessions:
+        tmp_db_session = _db_sessions[full_db_name]
+        if tmp_db_session.is_active:
+            return tmp_db_session
+
     full_db_name = os.path.expanduser(full_db_name)
     engine = create_engine('sqlite:///{dbname}'.format(dbname=full_db_name))
     Base.metadata.create_all(engine)

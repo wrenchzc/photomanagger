@@ -1,4 +1,4 @@
-from photomanager.imageutils import TagInfo, FileInfo
+from photomanager.utils.imageutils import TagInfo, FileInfo
 
 
 def test_jpg_tags():
@@ -9,10 +9,11 @@ def test_jpg_tags():
     assert (image_info.focal_length == "173/32")
 
     image_info = TagInfo('tests/data/test2.jpg')
-    assert (image_info.image_width == 3872)
-    assert (image_info.image_height == 2592)
-    assert (image_info.camera_brand == "PENTAX Corporation")
-    assert (image_info.focal_length == "300")
+    assert (image_info.image_width == 3648)
+    assert (image_info.image_height == 2736)
+    assert (image_info.camera_brand == "HUAWEI")
+    assert (image_info.camera_type == "LYA-AL00")
+    assert (image_info.focal_length == "187/25")
 
     image_info = TagInfo('tests/data/noexif.jpg')
     assert (image_info.image_width == 608)
