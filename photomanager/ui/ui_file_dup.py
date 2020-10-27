@@ -51,6 +51,9 @@ class Ui_DlgFileDup(object):
         self.btnDelete = QtWidgets.QPushButton(DlgFileDup)
         self.btnDelete.setGeometry(QtCore.QRect(700, 810, 75, 23))
         self.btnDelete.setObjectName("btnDelete")
+        self.lblIndex = QtWidgets.QLabel(DlgFileDup)
+        self.lblIndex.setGeometry(QtCore.QRect(320, 810, 131, 17))
+        self.lblIndex.setObjectName("lblIndex")
 
         self.retranslateUi(DlgFileDup)
         self.btnNext.clicked.connect(DlgFileDup.btnNext_click)
@@ -65,3 +68,4 @@ class Ui_DlgFileDup(object):
         self.btnPrev.setText(_translate("DlgFileDup", "Previous"))
         self.btnNext.setText(_translate("DlgFileDup", "Next"))
         self.btnDelete.setText(_translate("DlgFileDup", "Delete"))
+        self.lblIndex.setText(_translate("DlgFileDup", "0/0"))

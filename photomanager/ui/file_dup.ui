@@ -115,6 +115,19 @@
     <string>Delete</string>
    </property>
   </widget>
+  <widget class="QLabel" name="lblIndex">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>810</y>
+     <width>131</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0/0</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

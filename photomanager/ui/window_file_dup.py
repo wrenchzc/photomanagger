@@ -30,6 +30,8 @@ class WindowClearDup(QDialog, Ui_DlgFileDup):
 
         self.btnPrev.setEnabled(self.controller.active_index != 0)
         self.btnNext.setEnabled(self.controller.active_index != self.controller.dup_group_count - 1)
+        disp_index = f"{self.controller.active_index + 1}/{self.controller.dup_group_count}"
+        self.lblIndex.setText(disp_index)
 
 
     def btnNext_click(self):
