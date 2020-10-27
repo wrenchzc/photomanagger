@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_dlgDispImage(object):
     def setupUi(self, dlgDispImage):
         dlgDispImage.setObjectName("dlgDispImage")
-        dlgDispImage.resize(1096, 843)
+        dlgDispImage.resize(1427, 843)
         self.lblImage = QtWidgets.QLabel(dlgDispImage)
-        self.lblImage.setGeometry(QtCore.QRect(10, 20, 1071, 721))
+        self.lblImage.setGeometry(QtCore.QRect(10, 20, 1071, 751))
         self.lblImage.setText("")
         self.lblImage.setObjectName("lblImage")
         self.buttonBox = QtWidgets.QDialogButtonBox(dlgDispImage)
-        self.buttonBox.setGeometry(QtCore.QRect(985, 790, 81, 31))
+        self.buttonBox.setGeometry(QtCore.QRect(1330, 800, 81, 31))
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.btnPrev = QtWidgets.QPushButton(dlgDispImage)
@@ -33,6 +33,9 @@ class Ui_dlgDispImage(object):
         self.lblIndex.setGeometry(QtCore.QRect(280, 800, 201, 16))
         self.lblIndex.setText("")
         self.lblIndex.setObjectName("lblIndex")
+        self.lstInfo = QtWidgets.QListWidget(dlgDispImage)
+        self.lstInfo.setGeometry(QtCore.QRect(1110, 10, 301, 771))
+        self.lstInfo.setObjectName("lstInfo")
 
         self.retranslateUi(dlgDispImage)
         self.btnPrev.clicked.connect(dlgDispImage.prev_clicked)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1096</width>
+    <width>1427</width>
     <height>843</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>20</y>
      <width>1071</width>
-     <height>721</height>
+     <height>751</height>
     </rect>
    </property>
    <property name="text">
@@ -29,8 +29,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>985</x>
-     <y>790</y>
+     <x>1330</x>
+     <y>800</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -76,6 +76,16 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="lstInfo">
+   <property name="geometry">
+    <rect>
+     <x>1110</x>
+     <y>10</y>
+     <width>301</width>
+     <height>771</height>
+    </rect>
    </property>
   </widget>
  </widget>

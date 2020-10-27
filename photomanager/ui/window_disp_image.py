@@ -26,6 +26,12 @@ class WindowDispImage(QDialog, Ui_dlgDispImage):
     def __refresh_ui__(self):
         disp_img = self.controller.current_image
         self.lblImage.setPixmap(QPixmap.fromImage(disp_img))
+        self.lblIndex.setText(f"{self.controller.index + 1}/{self.controller.image_count}")
+        self.lstInfo.clear()
+        for field in self.controller.current_image_info:
+            val = self.controller.current_image_info[field]
+            field_info = f"{field}:  {val}"
+            self.lstInfo.addItem(field_info)
 
     def next_clicked(self):
         self.controller.next()
