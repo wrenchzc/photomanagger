@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlgDispImage</class>
+ <widget class="QDialog" name="dlgDispImage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1096</width>
+    <height>843</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="lblImage">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>1071</width>
+     <height>721</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>985</x>
+     <y>790</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnPrev">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>800</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Prev</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnNext">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>800</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblIndex">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>800</y>
+     <width>201</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnPrev</sender>
+   <signal>clicked()</signal>
+   <receiver>dlgDispImage</receiver>
+   <slot>prev_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>86</x>
+     <y>818</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>748</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnNext</sender>
+   <signal>clicked()</signal>
+   <receiver>dlgDispImage</receiver>
+   <slot>next_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>807</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>496</x>
+     <y>813</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>prev_clicked()</slot>
+  <slot>next_clicked()</slot>
+ </slots>
+</ui>
