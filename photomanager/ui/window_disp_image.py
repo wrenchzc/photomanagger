@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from photomanager.ui.ui_disp_image import Ui_dlgDispImage
 from photomanager.controller.controller_disp_image import DispImageController
-from photomanager.lib import errors
 
 
 class WindowDispImage(QDialog, Ui_dlgDispImage):
@@ -31,7 +30,7 @@ class WindowDispImage(QDialog, Ui_dlgDispImage):
         for field in self.controller.current_image_info:
             val = self.controller.current_image_info[field]
             field_info = f"{field}:  {val}"
-            self.lstInfo.addItem(field_info)
+            item = self.lstInfo.addItem(field_info)
 
     def next_clicked(self):
         self.controller.next()
