@@ -2,9 +2,9 @@ import os
 import time
 import shutil
 from photomanager.commands.index import CommandIndex
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME
+from photomanager.lib.pmconst import PMDBNAME
 from photomanager.db.models import ImageMeta
-from photomanager.db.dbutils import get_db_session, close_db_session
+from photomanager.db.dbutils import close_db_session
 from tests.utils import remove_file, remove_tmp_files
 
 cmd_inx_test_root = 'tests/data'

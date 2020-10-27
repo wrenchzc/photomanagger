@@ -1,10 +1,10 @@
 import os
 from sqlalchemy import and_
-from photomanager.pmconst import TODO_INX_NAME
+from photomanager.lib.pmconst import TODO_INX_NAME
 from photomanager.utils.imageutils import ImageInfo
 from photomanager.db.helper import exif_to_model
 from photomanager.db.models import ImageMeta
-from photomanager.helper import get_file_md5
+from photomanager.lib.helper import get_file_md5
 from photomanager.db.config import Config
 
 

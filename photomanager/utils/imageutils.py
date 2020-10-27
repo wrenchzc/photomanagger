@@ -4,8 +4,8 @@ import uuid
 
 from PIL import Image
 
-from photomanager.pmconst import SUPPORT_EXTS, SKIP_LIST, PATH_SEP
-from photomanager.helper import get_file_md5, get_timestamp_from_str
+from photomanager.lib.pmconst import SUPPORT_EXTS, SKIP_LIST, PATH_SEP
+from photomanager.lib.helper import get_file_md5, get_timestamp_from_str
 
 
 class ImageInfo:

@@ -1,9 +1,9 @@
-from PyQt5.QtWidgets import QDialog, QMessageBox, QListWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from photomanager.ui.ui_file_dup import Ui_DlgFileDup
-from photomanager.pmconst import PATH_SEP
 from photomanager.controller.controller_file_dup import FileDupController
-from photomanager import errors
+from photomanager.lib import errors
+
 
 class WindowClearDup(QDialog, Ui_DlgFileDup):
     def __init__(self, folder: str, db_session, dup_files_by_md5: dict, parent=None):

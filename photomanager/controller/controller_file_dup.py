@@ -1,9 +1,8 @@
 from typing import List
-from photomanager.pmconst import PATH_SEP
-from photomanager import errors
+from photomanager.lib.pmconst import PATH_SEP
+from photomanager.lib import errors
 from photomanager.controller.controller_base import UIControllerBase
-from photomanager.db.models import ImageMeta
-from photomanager.errors import RemoveImageIndexOutofRangeError, RemoveImageCannotRemoveAllError
+from photomanager.lib.errors import RemoveImageIndexOutofRangeError, RemoveImageCannotRemoveAllError
 from photomanager.utils.action_executor import ActionRemoveFile
 from PyQt5.QtGui import QImage 
 

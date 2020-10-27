@@ -5,8 +5,8 @@ import shutil
 from photomanager.db.models import ImageMeta
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
-from photomanager.errors import MultiFileError
-from photomanager.pmconst import PATH_SEP
+from photomanager.lib.errors import MultiFileError
+from photomanager.lib.pmconst import PATH_SEP
 from photomanager.db.config import Config, FieldBackupDir
 
 

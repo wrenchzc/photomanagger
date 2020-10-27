@@ -1,7 +1,7 @@
 import os
 import typing
 from photomanager.db.dbutils import get_db_session, close_db_session
-from photomanager.pmconst import PMDBNAME, PATH_SEP
+from photomanager.lib.pmconst import PMDBNAME, PATH_SEP
 from photomanager.db.config import Config
 
 

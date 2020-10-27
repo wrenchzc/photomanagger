@@ -1,7 +1,7 @@
 import sqlite3
 import os
 import typing
-from photomanager.pmconst import PMDBNAME
+from photomanager.lib.pmconst import PMDBNAME
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from photomanager.db.models import Base

@@ -5,7 +5,7 @@ import time
 import os
 from sqlalchemy import and_
 from tests.utils import remove_file, remove_tmp_files
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
+from photomanager.lib.pmconst import PMDBNAME, PATH_SEP
 from photomanager.commands.index import CommandIndex
 from photomanager.db.dbutils import get_db_session, close_db_session
 from photomanager.utils.action_executor import ActionRemoveFile

@@ -1,5 +1,5 @@
 import os
-from photomanager.pmconst import PM_TODO_LIST
+from photomanager.lib.pmconst import PM_TODO_LIST
 
 
 def remove_file(filename):

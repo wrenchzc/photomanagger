@@ -4,12 +4,12 @@ import os
 import pytest
 from tests.utils import remove_file
 from sqlalchemy import and_
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
+from photomanager.lib.pmconst import PM_TODO_LIST, PMDBNAME
 from photomanager.commands.index import CommandIndex 
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.db.dbutils import get_db_session
 from photomanager.controller.controller_file_dup import RemoveDupFilesDoer
-from photomanager import errors
+from photomanager.lib import errors
 from photomanager.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'

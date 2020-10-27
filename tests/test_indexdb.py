@@ -1,13 +1,12 @@
 import os
-import time
 import shutil
 import pytest
-from photomanager.pmconst import PM_TODO_LIST, PMDBNAME, PATH_SEP
+from photomanager.lib.pmconst import PM_TODO_LIST
 from photomanager.db.dbutils import IndexDBRaw, get_db_session, close_db_session
 from photomanager.db.models import ImageMeta
 from photomanager.db.imagehandler import ImageDBHandler
 from photomanager.utils.imageutils import get_folder_image_files
-from photomanager.pmconst import PMDBNAME
+from photomanager.lib.pmconst import PMDBNAME
 from photomanager.db.config import Config
 from tests.utils import remove_file
 
