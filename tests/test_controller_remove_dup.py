@@ -21,6 +21,7 @@ class TestRemoveDupController(object):
     @staticmethod
     def _clear():
         remove_tmp_files(cmd_inx_test_root)
+        shutil.rmtree('../photomanager_backup', ignore_errors=True)
 
     @staticmethod
     def _copy_dup_files():

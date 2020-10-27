@@ -13,6 +13,7 @@ from photomanager import errors
 from photomanager.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'
+default_backup_dir = "../photomanager_backup"
 
 
 class TestRemoveDup(object):
@@ -20,6 +21,7 @@ class TestRemoveDup(object):
 
     @staticmethod
     def _clear():
+        shutil.rmtree(default_backup_dir, ignore_errors=True)
         remove_file(cmd_inx_test_root + '/' + PM_TODO_LIST)
         remove_file(cmd_inx_test_root + '/' + "test_new.jpg")
 
@@ -77,7 +79,8 @@ class TestRemoveDup(object):
         remove_dup_ctr = RemoveDupFilesDoer(cmd_inx_test_root, db_session, dup_files)
         cnt = remove_dup_ctr.delete([1,2])
         assert(cnt == 2)
-        assert (not os.path.exists(cmd_inx_test_root +  "/subdir/test4_dup.jpg"))
+        assert (os.path.exists(default_backup_dir + "/subdir/test4_dup.jpg"))
+        assert (not os.path.exists(cmd_inx_test_root + "/subdir/test4_dup.jpg"))
         assert (not os.path.exists(cmd_inx_test_root + "/test4_dup.jpg"))
         assert (os.path.exists(cmd_inx_test_root + "/test4.jpg"))
         imgs = db_session.query(ImageMeta).filter(

@@ -1,17 +1,22 @@
 import os
 import platform
+import typing
+import shutil
 from photomanager.db.models import ImageMeta
 from sqlalchemy import and_
+from sqlalchemy.orm import Session
 from photomanager.errors import MultiFileError
 from photomanager.pmconst import PATH_SEP
+from photomanager.db.config import Config, FieldBackupDir
 
 
 class ActionExecutor(object):
 
-    def __init__(self, base_folder: str, db_session, action_item: dict):
+    def __init__(self, base_folder: str, db_session: Session, action_item: typing.Dict[str, typing.List]):
         self.base_folder = base_folder
         self.db_session = db_session
         self.action_item = action_item
+        self.config = Config(db_session)
 
     def do(self):
         raise NotImplementedError
@@ -27,17 +32,48 @@ class ActionRemoveFile(ActionExecutor):
             self.do_remove_file(relative_file)
 
     def do_remove_file(self, relative_filename):
+        self._do_backup_file(relative_filename)
         self._do_remove_file_from_disk(relative_filename)
         self._do_remove_file_from_db(relative_filename)
 
-    def _do_remove_file_from_disk(self, relative_filename):
+    def _do_backup_file(self, relative_filename):
+        full_name = self._get_fullname(relative_filename)
+        if not os.path.exists(full_name):
+            return
+
+        backup_dir = self.config.get_value(FieldBackupDir)
+
+        # remove driver letter
+        if platform.system() == "Windows" and not self.base_folder[1] == ":":
+            relative_filename = relative_filename[2:]
+
+        # remove first path separator
+        if relative_filename[0] == PATH_SEP:
+            relative_filename = relative_filename[1:]
+
+        backup_filename = f"{backup_dir}{PATH_SEP}{relative_filename}"
+        backup_file_path, _ = os.path.split(backup_filename)
+        os.makedirs(backup_file_path, exist_ok=True)
+
+        if os.path.exists(backup_filename):
+            ori_backup_name = backup_filename
+            for i in range(10000):
+                if not os.path.exists(f"{ori_backup_name}.{i}"):
+                    backup_filename = f"{ori_backup_name}.{i}"
+                    break
+        shutil.copyfile(full_name, backup_filename)
+
+    def _get_fullname(self, relative_filename: str):
         full_base_folder = self.base_folder
         if platform.system() == "Linux" and not self.base_folder.startswith(PATH_SEP):  # relative path:
             full_base_folder = os.getcwd() + PATH_SEP + self.base_folder
         elif platform.system() == "Windows" and not self.base_folder[1] == ":":
             full_base_folder = os.getcwd() + PATH_SEP + self.base_folder
 
-        fullname = f"{full_base_folder}/{relative_filename}"
+        return f"{full_base_folder}/{relative_filename}"
+
+    def _do_remove_file_from_disk(self, relative_filename: str):
+        fullname = self._get_fullname(relative_filename)
         if os.path.exists(fullname):
             os.remove(fullname)
 

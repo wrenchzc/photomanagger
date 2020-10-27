@@ -1,8 +1,11 @@
 from photomanager.db.models import Option
 from sqlalchemy.orm import Session
 
+FieldBackupDir = "backup_dir"
 
 class Config(object):
+
+    default_config = {"backup_dir": "../photomanager_backup"}
 
     def __init__(self, db_session: Session):
         self.session = db_session
@@ -22,3 +25,7 @@ class Config(object):
         opt = self.session.query(Option).filter(Option.name == name).first()
         if opt:
             return opt.value
+        else:
+            if name in self.default_config:
+                return self.default_config[name]
+

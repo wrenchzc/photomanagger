@@ -2,6 +2,7 @@ import click
 from photomanager.commands.index import CommandIndex
 from photomanager.commands.list import CommandList
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
+from photomanager.commands.config import CommandConfig
 
 
 @click.group()
@@ -39,10 +40,11 @@ def remove_dup(folder):
 
 
 @click.command()
-@click.option('--backup_dir', default="../photomanager_backup", help="backup folder when delete photo by commands")
-def config():
+@click.argument('folder', default="./")
+def config(folder, backup_dir):
     """ set or list the configuration """
-    pass
+    command_config = CommandConfig(folder, {"backup_dir", backup_dir})
+    command_config.do()
 
 
 @click.command()
