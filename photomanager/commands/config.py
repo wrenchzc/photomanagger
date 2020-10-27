@@ -1,6 +1,8 @@
 import os
+from photomanager.lib.pmconst import PATH_SEP
 from photomanager.commands.base import Command
 from photomanager.db.config import FieldBackupDir
+from photomanager.utils.pathutils import is_abspath
 
 
 class CommandConfig(Command):
@@ -13,8 +15,11 @@ class CommandConfig(Command):
 
     def _before_set_value(self, key, value):
         if key == FieldBackupDir:
-            return self._do_before_set_backup_dir()
+            return self._do_before_set_backup_dir(value)
 
-    @staticmethod
-    def _do_before_set_backup_dir(value):
-        return os.makedirs(value, exist_ok=True)
+    def _do_before_set_backup_dir(self, value):
+        path = value
+        if not is_abspath(value):
+            path = f"{self.folder}{PATH_SEP}{value}"
+
+        return os.makedirs(path, exist_ok=True)

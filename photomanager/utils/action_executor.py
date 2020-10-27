@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from photomanager.lib.errors import MultiFileError
 from photomanager.lib.pmconst import PATH_SEP
 from photomanager.db.config import Config, FieldBackupDir
+from photomanager.utils.pathutils import is_abspath
 
 
 class ActionExecutor(object):
@@ -42,6 +43,8 @@ class ActionRemoveFile(ActionExecutor):
             return
 
         backup_dir = self.config.get_value(FieldBackupDir)
+        if not is_abspath(backup_dir):
+            backup_dir = self.base_folder + PATH_SEP + backup_dir
 
         # remove driver letter
         if platform.system() == "Windows" and not self.base_folder[1] == ":":

@@ -13,7 +13,7 @@ from photomanager.lib import errors
 from photomanager.db.models import ImageMeta
 
 cmd_inx_test_root = 'tests/data'
-default_backup_dir = "../photomanager_backup"
+default_backup_dir = cmd_inx_test_root + "/../photomanager_backup"
 
 
 class TestRemoveDup(object):
