@@ -31,7 +31,7 @@ field.condition:value
 ```
 可以用空格分隔多个filter, 多个filter之间是and的关系
 ##### field支持以下输入：
-- time      时间
+- date      日期
 - person    人物
 - tag       标签
 - size      尺寸
@@ -41,7 +41,7 @@ field.condition:value
 ##### condition支持以下输入:
 - eq 等于
 - gte 大于等于
-- ge  大于
+- gt  大于
 - lt  小于
 - lte 小于等于
 - sw  以xxx开始

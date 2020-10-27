@@ -1,6 +1,6 @@
 import click
 from photomanager.commands.index import CommandIndex
-from photomanager.commands.list import CommandList
+from photomanager.commands.display import CommandList
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.commands.config import CommandConfig
 
@@ -22,12 +22,12 @@ def index(folder, force, skip_existed, clean):
 
 
 @click.command()
-@click.option('--tags', default=False, help="list photo names with tags")
-@click.option('--duplicate', default=False, help="list duplicate photos")
-@click.argument('folder')
-def list(folder, tags, duplicate):
+@click.argument('folder',  type=click.Path(exists=True), nargs=1)
+@click.argument('filters', nargs=-1)
+@click.option('--limit', default=0, help="image limit for one search, 0 is unlimited")
+def display(folder, filters, limit):
     """ List the images by condition"""
-    command_index = CommandList(folder, {"tags": tags, "duplicate": duplicate})
+    command_index = CommandList(folder, {"filters": filters})
     command_index.do()
 
 
@@ -62,7 +62,7 @@ def show():
 
 if __name__ == "__main__":
     photo_manager_cli.add_command(index)
-    photo_manager_cli.add_command(list)
+    photo_manager_cli.add_command(display)
     photo_manager_cli.add_command(tag)
     photo_manager_cli.add_command(config)
     photo_manager_cli.add_command(show)

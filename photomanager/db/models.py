@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, INTEGER, DATETIME, FLOAT, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import UniqueConstraint
+from sqlalchemy.orm import class_mapper
 
 Base = declarative_base()
 
@@ -46,6 +47,17 @@ class ImageMeta(Base):
             filename = self.filename
 
         return filename
+
+    @classmethod
+    def _get_fields(cls):
+        return class_mapper(cls).c.keys()
+
+    def get_dict_info(self):
+        d = {}
+        for field in self._get_fields():
+            d[field] = getattr(self, field)
+        return d
+
 
 
 class Tag(Base):
