@@ -30,18 +30,27 @@ class FilterParser(object):
 
     def do_parse_time_field(self, operator: str, val: str) -> BinaryExpression:
         # date is a sqlite function
+        # must use Model.field == None, not Model.field is None, because the operator "==" override by sqlalchemy
         if operator == "eq":
             return or_(func.date(ImageMeta.origin_datetime) == val,
                        and_(func.date(ImageMeta.file_createtime) == val,
                             ImageMeta.origin_datetime == None))
         elif operator == "gt":
-            return func.date(ImageMeta.origin_datetime) > val
+            return or_(func.date(ImageMeta.origin_datetime) > val,
+                       and_(func.date(ImageMeta.file_createtime) > val,
+                            ImageMeta.origin_datetime == None))
         elif operator == "gte":
-            return func.date(ImageMeta.origin_datetime) >= val
+            return or_(func.date(ImageMeta.origin_datetime) >= val,
+                       and_(func.date(ImageMeta.file_createtime) >= val,
+                            ImageMeta.origin_datetime == None))
         elif operator == "lt":
-            return func.date(ImageMeta.origin_datetime) < val
+            return or_(func.date(ImageMeta.origin_datetime) < val,
+                       and_(func.date(ImageMeta.file_createtime) < val,
+                            ImageMeta.origin_datetime == None))
         elif operator == "lte":
-            return func.date(ImageMeta.origin_datetime) <= val
+            return or_(func.date(ImageMeta.origin_datetime) <= val,
+                       and_(func.date(ImageMeta.file_createtime) <= val,
+                            ImageMeta.origin_datetime == None))
 
     def standard_date_str(self, val: str):
         if len(val) < 8 or len(val) > 10:
