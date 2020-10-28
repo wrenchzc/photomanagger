@@ -6,7 +6,7 @@ a comand line photo manager
 初步设想实现以下功能
 1. 查重, 使用md5查重. 
 2. 命令行批量标签.
-3. 命令汗批量操作，如重命名，批量改大小等
+3. 命令行批量操作，如重命名，批量改大小等
 4. 人脸识别.
 5. 人脸聚类.
 6. 自动打标签.
@@ -29,7 +29,7 @@ photo_manager command filter --option
 ```
 field.condition:value
 ```
-可以用空格分隔多个filter, 多个filter之间是and的关系
+可以用空格分隔多个filter, 多个filter之间是and的关系, 若不符合上诉格式，则执行模糊搜索
 ##### field支持以下输入：
 - date      日期
 - person    人物
