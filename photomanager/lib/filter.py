@@ -31,7 +31,9 @@ class FilterParser(object):
     def do_parse_time_field(self, operator: str, val: str) -> BinaryExpression:
         # date is a sqlite function
         if operator == "eq":
-            return func.date(ImageMeta.origin_datetime) == val
+            return or_(func.date(ImageMeta.origin_datetime) == val,
+                       and_(func.date(ImageMeta.file_createtime) == val,
+                            ImageMeta.origin_datetime == None))
         elif operator == "gt":
             return func.date(ImageMeta.origin_datetime) > val
         elif operator == "gte":

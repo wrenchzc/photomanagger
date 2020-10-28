@@ -28,7 +28,7 @@ def exif_to_model(image_info):
 
     image_meta.uuid = file_info.uuid
     image_meta.md5 = file_info.md5
-    str_create_time = time.strftime('%Y:%m:%d %H:%M:%S', time.localtime(file_info.create_time))
+    str_create_time = time.strftime('%Y:%m:%d %H:%M:%S', time.localtime(file_info.modify_time))
     image_meta.file_createtime = datetime.datetime.strptime(str_create_time, '%Y:%m:%d %H:%M:%S')
 
     image_meta.file_size = file_info.size
