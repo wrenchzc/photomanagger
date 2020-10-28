@@ -89,3 +89,17 @@ class TestDisplayImg(object):
         assert (len(image_infos) == 1)
         image_info = image_infos[0]
         assert image_info["filename"] == "test3.jpg"
+
+
+    def test_date_filter_by_file_createtime(self):
+        command_list = CommandList(cmd_inx_test_root, {"filters": ["date.eq:2019-02-28"]})
+        image_infos = command_list.get_filter_images()
+        assert (len(image_infos) == 2)
+        assert image_infos[0]["filename"] == "noexif.jpg"
+        assert image_infos[1]["filename"] == "dlrb.jpg"
+
+    def test_date_filter_by_8digit(self):
+        command_list = CommandList(cmd_inx_test_root, {"filters": ["date.eq:20160805"]})
+        image_infos = command_list.get_filter_images()
+        assert (len(image_infos) == 1)
+        assert image_infos[0]["filename"] == "test3.jpg"
