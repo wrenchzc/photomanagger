@@ -4,6 +4,7 @@ from photomanager.lib.filter import FiltersParser
 from photomanager.db.models import ImageMeta
 from photomanager.ui.window_disp_image import WindowDispImage
 from photomanager.ui.qt_app import qt_app
+from photomanager.utils.logger import logger
 
 
 class CommandList(Command):
@@ -29,7 +30,12 @@ class CommandList(Command):
 
     def do(self):
         disp_images = self.get_filter_images()
-        self.show(disp_images)
+        if disp_images:
+            self.show(disp_images)
+        else:
+            logger.info(f"no images match for filter {self.filters}")
+
+
 
 
 
