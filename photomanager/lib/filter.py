@@ -15,18 +15,22 @@ class FilterParser(object):
         self.condition = condition
 
     def parse(self) -> BinaryExpression:
-        pattern = "(.*?)\.(.*?):(.*)"
+        pattern = '(.*?)\.(.*?):(.*)'
         matched = re.match(pattern, self.condition)
         if not matched:
-            raise FilterError
-
-        if len(matched.groups()) != 3:
-            raise FilterError()
+            return self.do_parse_fuzzy_search(self.condition)
 
         field, operator, val = matched.groups()
         if field == FILTER_FIELD_DATE:
             val = self.standard_date_str(val)
             return self.do_parse_time_field(operator, val)
+
+    def do_parse_fuzzy_search(self, val):
+        like_cond = f"%{val}%"
+        return or_(ImageMeta.filename.like(like_cond),
+                   ImageMeta.folder.like(like_cond),
+                   ImageMeta.city.like(like_cond)
+                   )
 
     def do_parse_time_field(self, operator: str, val: str) -> BinaryExpression:
         # date is a sqlite function

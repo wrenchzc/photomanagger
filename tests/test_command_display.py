@@ -95,3 +95,9 @@ class TestDisplayImg(object):
         image_infos = command_list.get_filter_images()
         assert (len(image_infos) == 1)
         assert image_infos[0]["filename"] == "test3.jpg"
+
+    def test_date_filter_by_fuzzy(self):
+        command_list = CommandList(cmd_inx_test_root, {"filters": ["dlrb"]})
+        image_infos = command_list.get_filter_images()
+        assert (len(image_infos) == 1)
+        assert image_infos[0]["filename"] == "dlrb.jpg"
