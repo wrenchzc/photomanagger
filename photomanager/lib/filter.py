@@ -29,7 +29,8 @@ class FilterParser(object):
         like_cond = f"%{val}%"
         return or_(ImageMeta.filename.like(like_cond),
                    ImageMeta.folder.like(like_cond),
-                   ImageMeta.city.like(like_cond)
+                   ImageMeta.city.like(like_cond),
+                   ImageMeta.address.like(like_cond)
                    )
 
     def do_parse_time_field(self, operator: str, val: str) -> BinaryExpression:
