@@ -30,12 +30,15 @@ class ImageMeta(Base):
     exposure_bias = Column(FLOAT)
     exposure_mode = Column(FLOAT)
     iso_speed_rating = Column(FLOAT)
-    latitude = Column(String(32))
-    longitude = Column(String(32))
+    latitude = Column(String(64))
+    longitude = Column(String(64))
     altitude = Column(String(32))
     country = Column(String(32))
     province = Column(String(32))
     city = Column(String(32))
+    address = Column(String(512))
+    orientation = Column(INTEGER)
+    info = Column(String(1024))
 
     __table_args__ = (UniqueConstraint('folder', 'filename', name='folder_filename'),)
 

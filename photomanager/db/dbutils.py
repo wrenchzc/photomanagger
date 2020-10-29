@@ -67,12 +67,15 @@ class IndexDBRaw:
                           "exposure_bias float, " \
                           "exposure_mode float, " \
                           "iso_speed_rating float," \
-                          "latitude varchar(32)," \
-                          "longitude varchar(32), " \
+                          "latitude varchar(64)," \
+                          "longitude varchar(64), " \
                           "altitude varchar(32), " \
                           "country varchar(32), " \
                           "province varchar(32), " \
-                          "city varchar(32) " \
+                          "city varchar(32), " \
+                          "address varchar(512), "\
+                          "orientation int, " \
+                          "info varchar(1024)"\
                           ");" \
                           "CREATE TABLE IF NOT EXISTS tbl_tags" \
                           "(" \

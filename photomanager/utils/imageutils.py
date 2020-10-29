@@ -34,6 +34,16 @@ class TagInfo:
         self.ISO_speed_rating = self._get_tag_item(self.tags.get("EXIF ISOSpeedRatings", None))
         self.white_balance = self._get_tag_item(self.tags.get("EXIF WhiteBalance", None))
 
+        latitude_ref = self._get_tag_item(self.tags.get("GPS GPSLatitudeRef", None))
+        latitude = self._get_tag_item(self.tags.get("GPS GPSLatitude", None))
+        self.latitude = None if latitude is None else f"{latitude_ref}|{latitude}"
+
+        longitude_ref = self._get_tag_item(self.tags.get("GPS GPSLongitudeRef", None))
+        longitude = self._get_tag_item(self.tags.get("GPS GPSLongitude", None))
+        self.longitude = None if longitude is None else f"{longitude_ref}|{longitude}"
+
+        self.orientation = self._get_tag_item(self.tags.get("Thumbnail Orientation"))
+
     def _get_tag_item(self, tag):
         if tag:
             values = tag.values

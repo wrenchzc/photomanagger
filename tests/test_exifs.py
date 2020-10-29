@@ -14,6 +14,9 @@ def test_jpg_tags():
     assert (image_info.camera_brand == "HUAWEI")
     assert (image_info.camera_type == "LYA-AL00")
     assert (image_info.focal_length == "187/25")
+    assert (image_info.latitude == "N|[25, 44, 23236999/1000000]")
+    assert (image_info.longitude == "E|[113, 44, 7412567/250000]")
+    assert (image_info.orientation == 0)
 
     image_info = TagInfo('tests/data/noexif.jpg')
     assert (image_info.image_width == 608)

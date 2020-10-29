@@ -58,6 +58,9 @@ def exif_to_model(image_info):
             image_meta.exposure_mode = tags.exposure_mode
             image_meta.ISO_speed_rating = tags.ISO_speed_rating
             image_meta.white_balance = tags.white_balance
+            image_meta.latitude = tags.latitude
+            image_meta.longitude = tags.longitude
+            image_meta.orientation = tags.orientation
         except ValueError:
             pass
 
