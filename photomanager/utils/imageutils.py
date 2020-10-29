@@ -6,6 +6,7 @@ from PIL import Image
 
 from photomanager.lib.pmconst import SUPPORT_EXTS, SKIP_LIST, PATH_SEP
 from photomanager.lib.helper import get_file_md5, get_timestamp_from_str
+from photomanager.utils.logger import logger
 
 
 class ImageInfo:
@@ -67,7 +68,7 @@ class TagInfo:
         except OSError as e:
             self.image_width = 0
             self.image_height = 0
-            print("error when open image {filename} , message is {message}".format(filename=f.name, message=str(e)))
+            logger.info("error when open image {filename} , message is {message}".format(filename=f.name, message=str(e)))
 
     def __init__(self, filename):
         self.tags = None
@@ -79,11 +80,13 @@ class TagInfo:
                 self.has_exif = bool(tags)
                 self.tags = tags
             except KeyError:
-                print("can not read exif from {filename} ".format(filename=filename))
+                logger.info("can not read exif from {filename} ".format(filename=filename))
             except TypeError:
-                print("can not read exif from {filename} ".format(filename=filename))
+                logger.info("can not read exif from {filename} ".format(filename=filename))
             except IndexError:
-                print("can not read exif from {filename} ".format(filename=filename))
+                logger.info("can not read exif from {filename} ".format(filename=filename))
+            except Exception:
+                logger.info("can not read exif from {filename} ".format(filename=filename))
 
             if self.tags:
                 self._init_props_by_exif_tags()

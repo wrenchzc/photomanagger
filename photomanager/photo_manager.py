@@ -20,9 +20,18 @@ def index(folder, force, skip_existed, clean):
     command_index = CommandIndex(folder, {"force": force, "skip_existed": skip_existed, "clean": clean})
     command_index.do()
 
+@click.command()
+@click.option('--geoinfo', is_flag=True, help="update address by geoinfo")
+@click.argument('folder')
+def update():
+    command_index = CommandIndex(folder, {"force": force, "skip_existed": skip_existed, "clean": clean})
+    command_index.do()
+
+
+
 
 @click.command()
-@click.argument('folder',  type=click.Path(exists=True), nargs=1)
+@click.argument('folder', type=click.Path(exists=True), nargs=1)
 @click.argument('filters', nargs=-1)
 @click.option('--limit', default=0, help="image limit for one search, 0 is unlimited")
 def display(folder, filters, limit):

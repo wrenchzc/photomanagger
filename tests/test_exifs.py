@@ -1,4 +1,5 @@
 from photomanager.utils.imageutils import TagInfo, FileInfo
+from photomanager.utils.geoutils import get_address_by_lat_lng
 
 
 def test_jpg_tags():
@@ -27,4 +28,10 @@ def test_file_info():
     file_info = FileInfo('tests/data/test1.jpg')
     assert file_info.md5 == "060e16eb6c7254076752a480607b3d2c"
     assert file_info.size == 762652
+
+def test_geo_location():
+    address = get_address_by_lat_lng("N|[22, 31, 54731597/1000000]", "E|[114, 31, 1747467/50000]")
+    assert "地质公园路" in address
+    assert "大鹏" in address
+
 
