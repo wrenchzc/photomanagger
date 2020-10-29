@@ -3,6 +3,7 @@ from photomanager.commands.index import CommandIndex
 from photomanager.commands.display import CommandList
 from photomanager.commands.remove_dup import CommandRemoveDuplicate
 from photomanager.commands.config import CommandConfig
+from photomanager.commands.update import CommandUpdate
 
 
 @click.group()
@@ -20,14 +21,14 @@ def index(folder, force, skip_existed, clean):
     command_index = CommandIndex(folder, {"force": force, "skip_existed": skip_existed, "clean": clean})
     command_index.do()
 
+
 @click.command()
-@click.option('--geoinfo', is_flag=True, help="update address by geoinfo")
+@click.option('--geoinfo', is_flag=False, help="update address by geoinfo")
 @click.argument('folder')
-def update():
-    command_index = CommandIndex(folder, {"force": force, "skip_existed": skip_existed, "clean": clean})
-    command_index.do()
-
-
+def update(folder, geoinfo):
+    """update some info, such as adress by GPS info"""
+    command_update = CommandUpdate(folder, {"geoinfo": geoinfo})
+    command_update.do()
 
 
 @click.command()
@@ -63,17 +64,11 @@ def tag():
     pass
 
 
-@click.command()
-def show():
-    """show photos"""
-    pass
-
-
 if __name__ == "__main__":
     photo_manager_cli.add_command(index)
     photo_manager_cli.add_command(display)
     photo_manager_cli.add_command(tag)
     photo_manager_cli.add_command(config)
-    photo_manager_cli.add_command(show)
+    photo_manager_cli.add_command(update)
     photo_manager_cli.add_command(remove_dup)
     photo_manager_cli()
