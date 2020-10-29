@@ -20,8 +20,8 @@ photo_manager command filter --option
 #### command暂定以下几个
 - **config** set or list the configuration
 - **index** Index the photos in folder
-- **list** List the images by condition
-- **show** show photos
+- **display** display the images by condition
+- **update** update address info by GPS info
 - **tag** add tags to some photos
 - **organize** organize photos, such as dedup, merge photo and so on
 
@@ -45,3 +45,10 @@ field.condition:value
 - lt  小于
 - lte 小于等于
 - sw  以xxx开始
+
+#### 更新记录
+- 2020-10-29:
+  - 索引的时候加入gps信息
+  - 新增指令根据GPS信息更新address
+  - 模糊搜索的时候加入address字段
+  
