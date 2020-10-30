@@ -34,4 +34,8 @@ def test_geo_location():
     assert "地质公园路" in address
     assert "大鹏" in address
 
+    address = get_address_by_lat_lng("N|[22, 31, 54]", "E|[114, 31, 34]")
+    assert "地质公园路" in address
+    assert "大鹏" in address
+
 

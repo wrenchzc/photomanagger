@@ -14,6 +14,14 @@ def gps_info_to_degress(value):
         degress = int(radians) + float(arcminutes) / 60 + arcseconds / 3500
         return f"{letter}{degress}"
 
+    # for format E|[111, 33, 36]
+    pattern = '(.*?)\|\[(\d+).*?(\d+).*?(\d+)'
+    match = re.match(pattern, value)
+    if match:
+        letter, radians, arcminutes, arcseconds= match.groups()
+        degress = int(radians) + float(arcminutes) / 60 + float(arcseconds) / 3500
+        return f"{letter}{degress}"
+
 
 def get_address_by_lat_lng(latitude: str, longitude: str) -> str:
     """
@@ -25,7 +33,7 @@ def get_address_by_lat_lng(latitude: str, longitude: str) -> str:
         latitude = gps_info_to_degress(latitude)
         longitude = gps_info_to_degress(longitude)
 
-        location = _geo_locator.reverse(f"{latitude},{longitude}")
+        location = _geo_locator.reverse(f"{latitude},{longitude}", exactly_one=True)
         return location.address
 
     except TypeError:
