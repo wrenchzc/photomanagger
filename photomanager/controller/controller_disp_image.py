@@ -5,7 +5,7 @@ from photomanager.controller.controller_base import UIControllerBase
 from photomanager.lib.errors import RemoveImageIndexOutofRangeError, RemoveImageCannotRemoveAllError
 from photomanager.utils.action_executor import ActionRemoveFile
 from PyQt5.QtGui import QImage
-
+from PyQt5 import QtCore
 
 class DispImageController(UIControllerBase):
 
@@ -35,10 +35,11 @@ class DispImageController(UIControllerBase):
     def current_image_info(self):
         return self.image_infos[self.index]
 
-    @property
-    def current_image(self) -> QImage:
+    def get_current_image(self, size: QtCore.QSize) -> QImage:
         full_name = self.base_folder + PATH_SEP + self.current_image_info['folder'] + \
                     PATH_SEP + self.current_image_info['filename']
         disp_img = QImage(full_name)
         disp_img.load(full_name)
-        return disp_img
+
+        scaled_img = disp_img.scaled(size,  QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        return scaled_img

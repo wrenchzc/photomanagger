@@ -1,6 +1,7 @@
 import typing
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
+from PyQt5 import QtCore
 from photomanager.ui.ui_disp_image import Ui_dlgDispImage
 from photomanager.controller.controller_disp_image import DispImageController
 
@@ -20,10 +21,11 @@ class WindowDispImage(QDialog, Ui_dlgDispImage):
     def __init__ui__(self):
         self.setupUi(self)
         self.setModal(True)
-        self.lblImage.setScaledContents(True)
+        self.lblImage.setScaledContents(False)
 
     def __refresh_ui__(self):
-        disp_img = self.controller.current_image
+        disp_img = self.controller.get_current_image(self.lblImage.size())
+        self.lblImage.setAlignment(QtCore.Qt.AlignCenter)
         self.lblImage.setPixmap(QPixmap.fromImage(disp_img))
         self.lblIndex.setText(f"{self.controller.index + 1}/{self.controller.image_count}")
         self.lstInfo.clear()
